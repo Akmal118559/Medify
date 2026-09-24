@@ -1,0 +1,2643 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Medify</title>
+<style>
+:root{
+  --bg:#F0FDFA;
+  --surface:#FFFFFF;
+  --ink:#0F2724;
+  --ink-soft:#3F5C58;
+  --ink-faint:#5B7B77;
+  --primary:#0891B2;
+  --primary-dark:#066A80;
+  --primary-tint:#E1F4F7;
+  --accent:#16A34A;
+  --accent-dark:#128040;
+  --accent-tint:#E3F6EA;
+  --line:#CFE9E6;
+  --line-soft:#E3F4F2;
+  --danger:#DC2626;
+  --danger-tint:#FBE8E7;
+  --ok:#16A34A;
+  --ok-tint:#E3F6EA;
+  --star:#D97F06;
+  --radius-s:9px;
+  --radius-m:15px;
+  --radius-l:24px;
+  --font-head:'Figtree', -apple-system, sans-serif;
+  --font-body:'Noto Sans', -apple-system, sans-serif;
+  --shadow-card:0 1px 2px rgba(15,39,36,0.07), 0 1px 0 rgba(15,39,36,0.04);
+  --shadow-hover:0 10px 24px rgba(15,39,36,0.10), 0 2px 6px rgba(15,39,36,0.06);
+  --touch:44px;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --bg:#0B1917;
+    --surface:#122522;
+    --ink:#EAF6F4;
+    --ink-soft:#A9C7C2;
+    --ink-faint:#7FA29D;
+    --primary:#3FC2DC;
+    --primary-dark:#7FDCEF;
+    --primary-tint:#12302E;
+    --accent:#4ADE80;
+    --accent-dark:#7EEFA8;
+    --accent-tint:#123424;
+    --line:#1F3B37;
+    --line-soft:#182E2B;
+    --danger:#F0908A;
+    --danger-tint:#3A1E1C;
+    --ok:#4ADE80;
+    --ok-tint:#123424;
+    --star:#F0B94D;
+    --shadow-card:0 1px 2px rgba(0,0,0,.35);
+    --shadow-hover:0 10px 24px rgba(0,0,0,.42);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B1917; --surface:#122522; --ink:#EAF6F4; --ink-soft:#A9C7C2; --ink-faint:#7FA29D;
+  --primary:#3FC2DC; --primary-dark:#7FDCEF; --primary-tint:#12302E;
+  --accent:#4ADE80; --accent-dark:#7EEFA8; --accent-tint:#123424;
+  --line:#1F3B37; --line-soft:#182E2B; --danger:#F0908A; --danger-tint:#3A1E1C;
+  --ok:#4ADE80; --ok-tint:#123424; --star:#F0B94D; --shadow-card:0 1px 2px rgba(0,0,0,.35); --shadow-hover:0 10px 24px rgba(0,0,0,.42);
+}
+*{box-sizing:border-box;}
+@media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;} }
+html{scroll-padding-top:76px;}
+html,body{height:100%;}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  line-height:1.55;
+  font-size:16px;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;margin:0;color:var(--ink);letter-spacing:-0.01em;line-height:1.2;}
+.container{max-width:1180px;margin:0 auto;padding:0 20px;}
+::selection{background:var(--accent-tint);}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:4px;}
+svg.ic{flex-shrink:0;}
+
+/* Icon-bearing interactive elements get a pointer + min touch target */
+a,button,.spec-card,.chip,.day-tab,.slot-btn,.tab-btn{cursor:pointer;}
+
+/* Header */
+header.site{position:sticky;top:0;z-index:40;background:var(--surface);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px);}
+.header-row{display:flex;align-items:center;gap:20px;padding:14px 20px;max-width:1180px;margin:0 auto;}
+.logo{display:flex;align-items:center;gap:9px;font-family:var(--font-head);font-size:21px;font-weight:800;color:var(--primary-dark);flex-shrink:0;}
+.logo .mark{width:30px;height:30px;border-radius:9px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;}
+nav.main-nav{display:flex;gap:2px;flex:1;}
+nav.main-nav a{padding:10px 12px;border-radius:var(--radius-s);font-size:14.5px;font-weight:600;color:var(--ink-soft);white-space:nowrap;min-height:var(--touch);display:flex;align-items:center;}
+nav.main-nav a:hover{background:var(--line-soft);color:var(--ink);}
+nav.main-nav a.active{color:var(--primary-dark);background:var(--primary-tint);}
+.header-actions{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.icon-btn{width:var(--touch);height:var(--touch);border-radius:50%;border:1px solid var(--line);background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);transition:border-color .15s,color .15s,background .15s;flex-shrink:0;}
+.icon-btn:hover{border-color:var(--primary);color:var(--primary);}
+.icon-btn-danger{color:var(--danger);border-color:var(--danger);}
+.mobile-nav-btn{display:none;}
+.mobile-nav-overlay{position:fixed;inset:0;background:rgba(10,25,22,.5);z-index:90;display:flex;justify-content:flex-end;}
+.mobile-nav-panel{width:min(300px,84vw);height:100%;background:var(--surface);padding:18px;padding-top:calc(18px + env(safe-area-inset-top,0px));overflow-y:auto;display:flex;flex-direction:column;gap:3px;}
+.mobile-nav-panel a{padding:13px 14px;border-radius:var(--radius-s);font-size:15px;font-weight:600;color:var(--ink);min-height:48px;display:flex;align-items:center;gap:10px;}
+.mobile-nav-panel a.active{background:var(--primary-tint);color:var(--primary-dark);}
+.mobile-nav-panel a.danger{color:var(--danger);}
+@media (max-width: 980px){
+  .mobile-nav-btn{display:flex;}
+}
+@media (max-width: 640px){
+  .icon-btn-danger, .header-fav-btn{display:none;}
+  .header-actions{gap:6px;}
+  .header-row{padding-left:16px;padding-right:16px;gap:10px;}
+  .logo{font-size:18px;}
+}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:11px 18px;border-radius:var(--radius-s);font-size:14.5px;font-weight:700;border:1px solid transparent;transition:filter .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease, transform .15s ease;min-height:var(--touch);font-family:var(--font-head);}
+.btn-primary{background:var(--primary);color:#fff;box-shadow:0 1px 2px rgba(8,145,178,.25);}
+.btn-primary:hover{background:var(--primary-dark);box-shadow:0 4px 12px rgba(8,145,178,.28);transform:translateY(-1px);}
+.btn-accent{background:var(--accent);color:#fff;box-shadow:0 1px 2px rgba(22,163,74,.25);}
+.btn-accent:hover{background:var(--accent-dark);box-shadow:0 4px 12px rgba(22,163,74,.28);transform:translateY(-1px);}
+.btn-outline{background:transparent;border-color:var(--line);color:var(--ink);}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary-dark);}
+.btn-ghost{background:transparent;color:var(--ink-soft);padding:10px 12px;}
+.btn-ghost:hover{color:var(--ink);}
+.btn-sm{padding:8px 14px;font-size:13.5px;min-height:38px;}
+.btn-block{width:100%;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+
+/* Hero */
+.hero{background:linear-gradient(180deg, var(--primary-tint) 0%, var(--bg) 100%);border-bottom:1px solid var(--line);}
+.hero-inner{max-width:1180px;margin:0 auto;padding:52px 20px 40px;display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;}
+.eyebrow-note{font-size:13.5px;color:var(--primary-dark);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.hero h1{font-size:clamp(28px,3.6vw,42px);line-height:1.14;max-width:17ch;}
+.hero p.lead{font-size:16.5px;color:var(--ink-soft);margin:16px 0 26px;max-width:48ch;}
+.search-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-l);padding:20px;box-shadow:var(--shadow-hover);}
+.search-row{display:flex;gap:10px;}
+.search-input-wrap{flex:1;position:relative;}
+.search-input-wrap input{width:100%;padding:12px 14px 12px 42px;border:1px solid var(--line);border-radius:var(--radius-s);font-size:15px;background:var(--bg);color:var(--ink);font-family:inherit;min-height:var(--touch);}
+.search-input-wrap input:focus{outline:2px solid var(--primary);outline-offset:-1px;background:var(--surface);}
+.search-input-wrap .si{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-faint);}
+.search-examples{margin-top:12px;font-size:12.5px;color:var(--ink-faint);}
+.search-examples b{color:var(--ink-soft);font-weight:600;}
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.chip{padding:7px 13px;border-radius:20px;border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink-soft);background:var(--surface);display:inline-flex;align-items:center;gap:6px;min-height:36px;}
+.chip:hover{border-color:var(--primary);color:var(--primary-dark);}
+.symptom-cta{margin-top:16px;border:1.5px dashed var(--accent);background:var(--accent-tint);border-radius:var(--radius-m);padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.symptom-cta .icwrap{width:38px;height:38px;border-radius:10px;background:var(--surface);display:flex;align-items:center;justify-content:center;color:var(--accent-dark);flex-shrink:0;}
+.symptom-cta .txt{flex:1;font-size:13.5px;color:var(--ink-soft);}
+.symptom-cta b{display:block;font-size:14.5px;color:var(--ink);margin-bottom:2px;font-family:var(--font-head);}
+.hero-art{display:flex;justify-content:center;align-items:center;}
+.hero-art svg{width:100%;max-width:360px;height:auto;}
+
+.section{padding:44px 0;}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px;gap:16px;}
+.section-head h2{font-size:25px;}
+.section-head p{color:var(--ink-soft);font-size:14.5px;margin-top:6px;}
+.link-more{font-size:13.5px;font-weight:700;color:var(--primary-dark);white-space:nowrap;display:inline-flex;align-items:center;gap:4px;min-height:var(--touch);}
+.link-more:hover{text-decoration:underline;}
+
+.spec-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;}
+.spec-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:16px 10px;text-align:center;transition:border-color .15s,transform .15s,box-shadow .15s;}
+.spec-card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:var(--shadow-hover);}
+.spec-card .ic{color:var(--primary);margin:0 auto 8px;width:26px;height:26px;}
+.spec-card .nm{font-size:12.5px;font-weight:700;color:var(--ink);font-family:var(--font-head);}
+.spec-card .ct{font-size:11px;color:var(--ink-faint);margin-top:2px;}
+
+.card-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.card-grid.cols-4{grid-template-columns:repeat(4,1fr);}
+
+.doc-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:16px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;height:100%;transition:box-shadow .18s ease, transform .18s ease, border-color .18s ease;}
+.doc-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px);border-color:var(--line-soft);}
+.doc-top{display:flex;gap:12px;}
+.avatar{border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-weight:700;color:#fff;}
+.doc-name{font-weight:700;font-size:15.5px;color:var(--ink);font-family:var(--font-head);}
+.doc-spec{font-size:13px;color:var(--primary-dark);font-weight:600;margin-top:1px;display:flex;align-items:center;gap:5px;}
+.doc-clinic{font-size:12.5px;color:var(--ink-faint);margin-top:2px;}
+.rating-row{display:flex;align-items:center;gap:5px;font-size:13px;margin-top:9px;}
+.stars{display:flex;gap:1px;color:var(--star);}
+.rating-num{font-weight:700;color:var(--ink);}
+.rating-count{color:var(--ink-faint);}
+.doc-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
+.tag{font-size:11.5px;padding:4px 9px;border-radius:20px;background:var(--line-soft);color:var(--ink-soft);font-weight:600;}
+.doc-about{font-size:13px;color:var(--ink-soft);margin-top:10px;flex:1;}
+.doc-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft);}
+.price-slot{font-size:12px;color:var(--ink-faint);}
+.price{font-weight:800;font-size:15px;color:var(--ink);font-family:var(--font-head);}
+.slot-next{font-size:12px;color:var(--ok);font-weight:700;margin-top:1px;display:flex;align-items:center;gap:4px;justify-content:flex-end;}
+.doc-btns{display:flex;gap:8px;margin-top:12px;}
+
+.clinic-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);overflow:hidden;box-shadow:var(--shadow-card);display:flex;flex-direction:column;height:100%;transition:box-shadow .18s ease, transform .18s ease;}
+.clinic-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px);}
+.clinic-photo{height:118px;display:flex;align-items:center;justify-content:center;color:#fff;position:relative;}
+.clinic-body{padding:14px 16px;flex:1;display:flex;flex-direction:column;}
+.clinic-name{font-weight:700;font-size:15px;font-family:var(--font-head);}
+.clinic-addr{font-size:12.5px;color:var(--ink-faint);margin-top:3px;display:flex;gap:5px;align-items:flex-start;}
+.clinic-foot{margin-top:auto;padding-top:12px;}
+
+.review-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:16px;}
+.rev-head{display:flex;justify-content:space-between;align-items:center;}
+.rev-author{font-weight:700;font-size:13.5px;font-family:var(--font-head);}
+.rev-date{font-size:12px;color:var(--ink-faint);}
+.rev-text{font-size:13.5px;color:var(--ink-soft);margin-top:8px;}
+
+section.strip{background:var(--primary-dark);color:#fff;padding:38px 0;}
+.strip .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;}
+.strip h3{color:#fff;font-size:21px;max-width:32ch;}
+.strip p{color:rgba(255,255,255,.82);font-size:14px;margin-top:6px;}
+.strip-list{display:flex;gap:10px;flex-wrap:wrap;}
+.strip-item{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);color:#fff;padding:9px 14px;border-radius:var(--radius-s);font-size:13.5px;font-weight:600;}
+.strip-item:hover{background:rgba(255,255,255,.18);}
+
+footer.site{border-top:1px solid var(--line);padding:36px 0 30px;margin-top:20px;}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:26px;}
+.foot-grid h4{font-size:13px;color:var(--ink-faint);font-weight:700;margin-bottom:10px;font-family:var(--font-head);}
+.foot-grid a{display:flex;align-items:center;font-size:13.5px;color:var(--ink-soft);padding:5px 0;min-height:30px;}
+.foot-grid a:hover{color:var(--primary);}
+.foot-bottom{margin-top:26px;padding-top:16px;border-top:1px solid var(--line-soft);font-size:12.5px;color:var(--ink-faint);}
+
+.page-head{padding:28px 0 18px;border-bottom:1px solid var(--line);background:var(--surface);}
+.breadcrumb{font-size:12.5px;color:var(--ink-faint);margin-bottom:8px;display:flex;gap:6px;align-items:center;flex-wrap:wrap;}
+.breadcrumb a:hover{color:var(--primary);}
+
+.filters-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);margin-bottom:20px;}
+select{font-family:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-s);font-size:13.5px;background:var(--surface);color:var(--ink);min-height:var(--touch);}
+.filter-toggle{display:flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid var(--line);border-radius:20px;font-size:13px;font-weight:600;color:var(--ink-soft);background:var(--surface);min-height:var(--touch);}
+.filter-toggle.active{background:var(--primary-tint);border-color:var(--primary);color:var(--primary-dark);}
+.results-count{font-size:13.5px;color:var(--ink-faint);margin-left:auto;}
+.list-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+.empty-state{text-align:center;padding:60px 20px;color:var(--ink-faint);}
+.empty-state .ic{color:var(--ink-faint);margin:0 auto 14px;width:40px;height:40px;}
+.empty-state h3{color:var(--ink-soft);font-size:17px;margin-bottom:6px;}
+
+.doc-hero{display:grid;grid-template-columns:200px 1fr;gap:28px;padding:30px 0;}
+.doc-hero-avatar{width:190px;height:190px;border-radius:var(--radius-l);display:flex;align-items:center;justify-content:center;font-family:var(--font-head);font-size:54px;color:#fff;font-weight:700;}
+.doc-hero-info h1{font-size:27px;}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.pill{font-size:12.5px;padding:6px 12px;border-radius:20px;background:var(--primary-tint);color:var(--primary-dark);font-weight:700;display:inline-flex;align-items:center;gap:5px;}
+.info-grid{display:grid;grid-template-columns:2fr 1fr;gap:30px;padding-bottom:40px;}
+.info-block{margin-bottom:28px;}
+.info-block h3{font-size:17px;margin-bottom:12px;}
+.info-block p{color:var(--ink-soft);font-size:14.5px;}
+.kv-list{display:flex;flex-direction:column;gap:11px;}
+.kv-row{display:flex;gap:10px;font-size:14px;align-items:flex-start;}
+.kv-row .ic{color:var(--ink-faint);margin-top:2px;flex-shrink:0;}
+.kv-row .k{color:var(--ink-faint);min-width:110px;flex-shrink:0;}
+.kv-row .v{color:var(--ink);}
+.sidebar-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:18px;position:sticky;top:80px;}
+.sidebar-card h4{font-size:15px;margin-bottom:12px;}
+
+.day-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;}
+.day-tab{flex-shrink:0;padding:9px 13px;border:1px solid var(--line);border-radius:var(--radius-s);text-align:center;font-size:12.5px;min-width:52px;background:var(--surface);min-height:52px;}
+.day-tab .dow{color:var(--ink-faint);font-size:10.5px;text-transform:lowercase;}
+.day-tab .dnum{font-weight:700;font-size:15px;margin-top:2px;font-family:var(--font-head);}
+.day-tab.active{background:var(--primary);border-color:var(--primary);color:#fff;}
+.day-tab.active .dow{color:rgba(255,255,255,.75);}
+.day-tab:disabled{opacity:.35;}
+.slot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;}
+.slot-btn{padding:10px 4px;border:1px solid var(--line);border-radius:var(--radius-s);font-size:13px;background:var(--surface);color:var(--ink);min-height:42px;font-weight:600;}
+.slot-btn:hover:not(:disabled){border-color:var(--primary);color:var(--primary-dark);}
+.slot-btn.busy{background:var(--line-soft);color:var(--ink-faint);text-decoration:line-through;cursor:not-allowed;}
+.slot-btn.selected{background:var(--primary);border-color:var(--primary);color:#fff;}
+
+.tab-row{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:20px;overflow-x:auto;}
+.tab-btn{padding:12px 16px;font-size:14px;font-weight:700;color:var(--ink-faint);border-bottom:2px solid transparent;white-space:nowrap;font-family:var(--font-head);min-height:var(--touch);}
+.tab-btn.active{color:var(--primary-dark);border-color:var(--primary);}
+
+.rating-breakdown{display:flex;flex-direction:column;gap:9px;}
+.rb-row{display:flex;align-items:center;gap:10px;font-size:13px;}
+.rb-label{width:150px;color:var(--ink-soft);flex-shrink:0;}
+.rb-bar{flex:1;height:6px;background:var(--line-soft);border-radius:4px;overflow:hidden;}
+.rb-fill{height:100%;background:var(--accent);}
+.rb-val{width:26px;text-align:right;font-weight:700;}
+
+.symptom-page{max-width:720px;margin:0 auto;padding:40px 20px 70px;}
+.symptom-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-l);padding:22px;box-shadow:var(--shadow-card);}
+textarea{width:100%;min-height:120px;padding:14px;border:1px solid var(--line);border-radius:var(--radius-s);font-family:inherit;font-size:14.5px;resize:vertical;background:var(--bg);color:var(--ink);}
+textarea:focus{outline:2px solid var(--primary);outline-offset:-1px;background:var(--surface);}
+.disclaimer{background:var(--danger-tint);border:1px solid var(--danger);border-radius:var(--radius-m);padding:14px 16px;font-size:13px;color:var(--danger);margin-top:18px;display:flex;gap:10px;}
+.disclaimer .ic{flex-shrink:0;margin-top:1px;}
+.symptom-result{margin-top:24px;padding-top:20px;border-top:1px solid var(--line);}
+.result-spec{display:flex;align-items:center;justify-content:space-between;background:var(--primary-tint);border-radius:var(--radius-m);padding:14px 16px;margin-bottom:10px;flex-wrap:wrap;gap:10px;}
+.result-spec .l{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--primary-dark);font-family:var(--font-head);}
+
+.stepper{display:flex;gap:0;margin-bottom:32px;}
+.step{flex:1;text-align:center;position:relative;padding-bottom:12px;border-bottom:3px solid var(--line);}
+.step.done{border-color:var(--primary);}
+.step.active{border-color:var(--primary);}
+.step .snum{font-size:12px;color:var(--ink-faint);font-weight:700;}
+.step.active .snum,.step.done .snum{color:var(--primary-dark);}
+.step .slabel{font-size:13px;margin-top:2px;color:var(--ink-soft);}
+.booking-wrap{max-width:640px;margin:0 auto;padding:34px 20px 70px;}
+.form-row{margin-bottom:16px;}
+.form-row label{display:block;font-size:13px;font-weight:700;color:var(--ink-soft);margin-bottom:6px;}
+.form-row input,.form-row textarea{width:100%;padding:12px 13px;border:1px solid var(--line);border-radius:var(--radius-s);font-size:14.5px;font-family:inherit;background:var(--bg);color:var(--ink);min-height:var(--touch);}
+.form-row input:focus,.form-row textarea:focus{outline:2px solid var(--primary);outline-offset:-1px;background:var(--surface);}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.summary-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:16px 18px;margin-bottom:20px;}
+.summary-box .sr{display:flex;justify-content:space-between;font-size:13.5px;padding:6px 0;gap:12px;}
+.summary-box .sr .k{color:var(--ink-faint);flex-shrink:0;}
+.summary-box .sr .v{text-align:right;}
+.confirm-box{text-align:center;padding:26px 0;}
+.confirm-tick{width:64px;height:64px;border-radius:50%;background:var(--ok-tint);color:var(--ok);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;}
+
+.cab-wrap{display:grid;grid-template-columns:220px 1fr;gap:30px;padding:30px 0 70px;}
+.cab-nav a{display:flex;align-items:center;gap:9px;padding:11px 14px;border-radius:var(--radius-s);font-size:14px;font-weight:600;color:var(--ink-soft);margin-bottom:2px;min-height:var(--touch);}
+.cab-nav a.active{background:var(--primary-tint);color:var(--primary-dark);}
+.cab-nav a:hover{background:var(--line-soft);}
+.appt-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-m);padding:16px;display:flex;gap:14px;margin-bottom:12px;}
+.status-badge{font-size:11.5px;padding:4px 10px;border-radius:20px;font-weight:700;white-space:nowrap;}
+.status-upcoming{background:var(--ok-tint);color:var(--ok);}
+.status-done{background:var(--line-soft);color:var(--ink-faint);}
+.status-cancelled{background:var(--danger-tint);color:var(--danger);}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(10,25,22,.55);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal-box{background:var(--surface);border-radius:var(--radius-l);padding:26px;max-width:400px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.25);max-height:90vh;overflow-y:auto;}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:var(--radius-s);font-size:13.5px;font-weight:600;z-index:200;box-shadow:0 6px 20px rgba(0,0,0,.25);display:none;}
+
+.compare-tray{position:fixed;left:0;right:0;bottom:0;z-index:80;background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -6px 20px rgba(0,0,0,.1);padding:10px 20px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));}
+.compare-tray-inner{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.compare-tray-avatars{display:flex;gap:8px;flex:1;flex-wrap:wrap;align-items:center;}
+.compare-tray-chip{display:flex;align-items:center;gap:6px;background:var(--line-soft);border-radius:20px;padding:4px 10px 4px 4px;font-size:12.5px;font-weight:600;color:var(--ink-soft);}
+.compare-tray-chip button{border:none;background:none;color:var(--ink-faint);display:flex;align-items:center;}
+
+.clinic-admin-header{background:var(--ink);color:#fff;padding:14px 0;}
+.clinic-admin-header .container{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+.clinic-admin-header a{color:rgba(255,255,255,.85);font-weight:600;font-size:13.5px;}
+.clinic-admin-header a:hover{color:#fff;}
+.admin-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+.admin-table th{text-align:left;color:var(--ink-faint);font-weight:700;font-size:12px;padding:8px 10px;border-bottom:1px solid var(--line);}
+.admin-table td{padding:10px;border-bottom:1px solid var(--line-soft);vertical-align:middle;}
+.compare-table{width:100%;border-collapse:collapse;}
+.compare-table th,.compare-table td{padding:12px 14px;border-bottom:1px solid var(--line-soft);font-size:13.5px;text-align:left;vertical-align:top;}
+.compare-table th{color:var(--ink-faint);font-weight:700;font-size:12px;width:150px;flex-shrink:0;}
+.notif-banner{display:flex;gap:12px;align-items:flex-start;background:var(--accent-tint);border:1px solid var(--accent);border-radius:var(--radius-m);padding:14px 16px;margin-bottom:14px;}
+.notif-banner .icwrap{width:36px;height:36px;border-radius:10px;background:var(--surface);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+@media (max-width: 980px){
+  .hero-inner{grid-template-columns:1fr;}
+  .hero-art{display:none;}
+  .spec-grid{grid-template-columns:repeat(4,1fr);}
+  .card-grid,.card-grid.cols-4,.list-grid{grid-template-columns:repeat(2,1fr);}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+  .info-grid{grid-template-columns:1fr;}
+  .cab-wrap{grid-template-columns:1fr;}
+  nav.main-nav{display:none;}
+  .doc-hero{grid-template-columns:1fr;text-align:center;}
+  .doc-hero-avatar{margin:0 auto;}
+  .pill-row{justify-content:center;}
+  .doc-spec{justify-content:center;}
+}
+@media (max-width: 620px){
+  .spec-grid{grid-template-columns:repeat(3,1fr);}
+  .card-grid,.card-grid.cols-4,.list-grid{grid-template-columns:1fr;}
+  .foot-grid{grid-template-columns:1fr 1fr;}
+  .form-row-2{grid-template-columns:1fr;}
+  .strip .container{flex-direction:column;align-items:flex-start;}
+}
+</style>
+
+<div id="app"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============ ICONS (SVG, no emoji — per design-system accessibility rule) ============ */
+const ICONS = {
+  search: '<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.4" y2="16.4"/>',
+  calendar: '<rect x="3" y="4.5" width="18" height="16.5" rx="2.2"/><line x1="3" y1="9.5" x2="21" y2="9.5"/><line x1="8" y1="2.5" x2="8" y2="6.5"/><line x1="16" y1="2.5" x2="16" y2="6.5"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/>',
+  phone: '<path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1.1.5 1.1 1.1V20c0 .6-.5 1.1-1.1 1.1C10.9 21.1 2.9 13.1 2.9 3.2 2.9 2.6 3.4 2 4 2h3.3c.6 0 1.1.5 1.1 1.1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z"/>',
+  mappin: '<path d="M12 21s7-7.1 7-12a7 7 0 1 0-14 0c0 4.9 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/>',
+  heartOutline: '<path d="M12 20.2s-7.8-4.7-10-9.6C.4 7 2 3.4 5.6 2.7c2-.4 4 .5 5 2.2h.8c1-1.7 3-2.6 5-2.2C20 3.4 21.6 7 20 10.6c-2.2 4.9-10 9.6-10 9.6z"/>',
+  heartFilled: '<path d="M12 20.2s-7.8-4.7-10-9.6C.4 7 2 3.4 5.6 2.7c2-.4 4 .5 5 2.2h.8c1-1.7 3-2.6 5-2.2C20 3.4 21.6 7 20 10.6c-2.2 4.9-10 9.6-10 9.6z" fill="currentColor" stroke="none"/>',
+  star: '<path d="M12 2.6l2.9 6 6.5.7-4.8 4.6 1.2 6.5L12 17.2l-5.8 3.2 1.2-6.5-4.8-4.6 6.5-.7z"/>',
+  starFilled: '<path d="M12 2.6l2.9 6 6.5.7-4.8 4.6 1.2 6.5L12 17.2l-5.8 3.2 1.2-6.5-4.8-4.6 6.5-.7z" fill="currentColor" stroke="none"/>',
+  check: '<polyline points="20 6.5 9.5 17 4 12"/>',
+  checkCircle: '<circle cx="12" cy="12" r="9.5"/><polyline points="16.5 9 10.8 14.7 8 12"/>',
+  alert: '<path d="M12 3.5 21.5 20h-19z"/><line x1="12" y1="9.5" x2="12" y2="13.5"/><circle cx="12" cy="16.7" r="0.15" fill="currentColor" stroke="currentColor" stroke-width="1.6"/>',
+  arrowRight: '<line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/>',
+  close: '<line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>',
+  chevronDown: '<polyline points="6 9 12 15 18 9"/>',
+  user: '<circle cx="12" cy="8.2" r="3.6"/><path d="M4.5 20.2c1.3-3.6 4.2-5.6 7.5-5.6s6.2 2 7.5 5.6"/>',
+  theme: '<path d="M12 3a9 9 0 1 0 9 9c0-.3 0-.6-.1-.9a6.2 6.2 0 0 1-7.6-7.6c-.4-.3-.9-.5-1.3-.5z"/>',
+  building: '<rect x="4" y="3" width="16" height="18" rx="1.6"/><line x1="8" y1="7.5" x2="8" y2="7.6"/><line x1="12" y1="7.5" x2="12" y2="7.6"/><line x1="16" y1="7.5" x2="16" y2="7.6"/><line x1="8" y1="11.5" x2="8" y2="11.6"/><line x1="12" y1="11.5" x2="12" y2="11.6"/><line x1="16" y1="11.5" x2="16" y2="11.6"/><rect x="9.6" y="15" width="4.8" height="6" rx="0.6"/>',
+  filter: '<line x1="4" y1="6" x2="20" y2="6"/><line x1="7" y1="12" x2="17" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/>',
+  logo: '<path d="M12 3.5c-3.6 0-6.6 2.9-6.6 6.5 0 5.8 6.6 10.5 6.6 10.5s6.6-4.7 6.6-10.5c0-3.6-3-6.5-6.6-6.5z"/><line x1="12" y1="7.6" x2="12" y2="12.6"/><line x1="9.5" y1="10.1" x2="14.5" y2="10.1"/>',
+  /* specialties */
+  spec_therapist: '<circle cx="7" cy="4.5" r="1.6"/><path d="M7 6.1v5.4a4.4 4.4 0 0 0 8.8 0V8.5"/><path d="M15.8 8.5a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>',
+  spec_lor: '<path d="M9 4.5C6 5.5 4.5 8 5 11c.4 2.9 2.6 3.5 2.6 6a3 3 0 0 0 6 0c0-2.2-1.6-2.6-1.6-4.6a2 2 0 1 1 4 0c0 .8-.2 1.4-.5 2"/>',
+  spec_cardio: '<path d="M12 20s-7-4.4-9-8.8C1.7 8 3 5 6 4.4c1.8-.4 3.6.4 4.6 1.9h.8c1-1.5 2.8-2.3 4.6-1.9 3 .6 4.3 3.6 3 6.8-2 4.4-9 8.8-9 8.8z"/><polyline points="6 12 9.5 12 11 9 13 15 14.5 12 18 12"/>',
+  spec_neuro: '<path d="M9 4.2a3 3 0 0 0-3 3c0 .4.1.8.2 1.1A3 3 0 0 0 5 11c0 1 .4 1.9 1.1 2.5A3 3 0 0 0 9 18a3 3 0 0 0 3-3V6.2a2 2 0 0 0-3-2z"/><path d="M15 4.2a3 3 0 0 1 3 3c0 .4-.1.8-.2 1.1A3 3 0 0 1 19 11c0 1-.4 1.9-1.1 2.5A3 3 0 0 1 15 18a3 3 0 0 1-3-3"/>',
+  spec_derma: '<path d="M18.5 5.5c-6 0-13 3-13 10a5.5 5.5 0 0 0 11 0c0-3-2-4.5-2-7 0-1.7 1.6-3 4-3z"/><path d="M12 20v-4.5"/>',
+  spec_ophtal: '<path d="M2.5 12S6 6 12 6s9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6z"/><circle cx="12" cy="12" r="2.8"/>',
+  spec_gastro: '<path d="M8 3.5c0 2-1.8 2.6-1.8 5.2 0 1.4.9 2.1 2.3 2.1 1.6 0 2-1.1 3.3-1.1 2.4 0 3.7 1.9 3.7 4.4a5.3 5.3 0 0 1-10.6 0c0-1.7.6-2.7 1.3-3.8"/>',
+  spec_endocrine: '<line x1="12" y1="3.5" x2="12" y2="7.5"/><line x1="5" y1="7.5" x2="19" y2="7.5"/><path d="M5 7.5 2.5 13a2.6 2.6 0 0 0 5 0z"/><path d="M19 7.5 16.5 13a2.6 2.6 0 0 0 5 0z"/><line x1="8.5" y1="20.5" x2="15.5" y2="20.5"/><line x1="12" y1="7.5" x2="12" y2="20.5"/>',
+  spec_uro: '<path d="M12 3s6 6.8 6 11.5A6 6 0 1 1 6 14.5C6 9.8 12 3 12 3z"/>',
+  spec_gyneco: '<circle cx="12" cy="9" r="6"/><line x1="12" y1="15" x2="12" y2="21.5"/><line x1="8.7" y1="18.3" x2="15.3" y2="18.3"/>',
+  spec_pediatric: '<circle cx="12" cy="7" r="4"/><path d="M5 21c0-4.5 3-7 7-7s7 2.5 7 7"/><line x1="10" y1="6.6" x2="10" y2="6.7"/><line x1="14" y1="6.6" x2="14" y2="6.7"/><path d="M10.3 8.4c.5.4 1.5.4 2 0"/>',
+  spec_dentist: '<path d="M12 4c-2.6 0-4.4 1-5.2 2.7-.9 1.9-.4 4 .1 6.2.5 2.2.9 5.3 2.3 5.3 1.5 0 1.2-3.6 2.8-3.6s1.3 3.6 2.8 3.6c1.4 0 1.8-3.1 2.3-5.3.5-2.2 1-4.3.1-6.2C16.4 5 14.6 4 12 4z"/>',
+  spec_surgeon: '<circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><line x1="7.8" y1="7.8" x2="19.5" y2="19.5"/><line x1="7.8" y1="16.2" x2="14.5" y2="9.5"/><line x1="16" y1="7" x2="19.5" y2="3.5"/>',
+  spec_psy: '<path d="M9 3.5a5 5 0 0 0-5 5c0 1.6.7 2.7 1.6 3.6C6.2 12.6 7 13.2 7 15v.5a2 2 0 0 0 2 2h1"/><path d="M9 20.5v-3"/><path d="M12 20.5v-3"/><circle cx="6.6" cy="8" r="0.15" fill="currentColor" stroke-width="1.8"/>',
+  menu: '<line x1="4" y1="6.5" x2="20" y2="6.5"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17.5" x2="20" y2="17.5"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 6.5 12 13l8-6.5"/>',
+  lock: '<rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>',
+  document: '<path d="M7 3.5h7l4 4v13h-11z"/><path d="M14 3.5v4h4"/><line x1="9.2" y1="12" x2="14.8" y2="12"/><line x1="9.2" y1="15.5" x2="14.8" y2="15.5"/>',
+  pill: '<rect x="3.5" y="9.3" width="17" height="7.4" rx="3.7" transform="rotate(-35 12 13)"/><line x1="11" y1="9.7" x2="14.3" y2="15.8" transform="rotate(-35 12 13)"/>',
+  flask: '<path d="M10 3.5h4"/><path d="M10.5 3.5v6.5L5.8 18a2 2 0 0 0 1.8 3h8.8a2 2 0 0 0 1.8-3l-4.7-8V3.5"/><line x1="8.3" y1="14.5" x2="15.7" y2="14.5"/>',
+  shieldCheck: '<path d="M12 3.2 5 6v5.5c0 4.6 3 7.7 7 9.3 4-1.6 7-4.7 7-9.3V6z"/><polyline points="9 12 11.2 14.2 15.3 9.8"/>',
+  sliders: '<line x1="5" y1="5" x2="5" y2="19"/><line x1="12" y1="5" x2="12" y2="19"/><line x1="19" y1="5" x2="19" y2="19"/><circle cx="5" cy="9" r="2"/><circle cx="12" cy="15" r="2"/><circle cx="19" cy="7" r="2"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5 13.3 13.3 8.5 15.5 10.7 10.7z"/>',
+  siren: '<path d="M12 4a6 6 0 0 1 6 6v6H6v-6a6 6 0 0 1 6-6z"/><line x1="12" y1="1.5" x2="12" y2="3.4"/><line x1="4.5" y1="9.5" x2="6.3" y2="9.5"/><line x1="17.7" y1="9.5" x2="19.5" y2="9.5"/><line x1="4" y1="19.5" x2="20" y2="19.5"/>',
+  droplet: '<path d="M12 3s6 6.8 6 11.5A6 6 0 1 1 6 14.5C6 9.8 12 3 12 3z"/>',
+  navigation: '<polygon points="12 2.5 20 20 12 16.5 4 20"/>',
+  upload: '<path d="M12 15.5V4.5"/><polyline points="7.5 9 12 4.5 16.5 9"/><path d="M5 15.5v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/>',
+  trash: '<polyline points="4.5 6.5 6 6.5 19.5 6.5"/><path d="M8.5 6.5V4.5a1.5 1.5 0 0 1 1.5-1.5h4a1.5 1.5 0 0 1 1.5 1.5v2"/><path d="M7 6.5 8 20h8l1-13.5"/>',
+  bed: '<path d="M3 18v-9"/><path d="M3 13h18v5"/><path d="M3 10h9v3"/><circle cx="6.5" cy="8.2" r="1.4"/><path d="M21 18v-3a2 2 0 0 0-2-2h-6"/>',
+  plus: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  scale: '<line x1="6" y1="4" x2="6" y2="20"/><line x1="18" y1="4" x2="18" y2="20"/><path d="M3 8l3-4 3 4"/><path d="M15 8l3-4 3 4"/><path d="M2.5 15.5a3.5 3.5 0 0 0 7 0L6 8.5z"/><path d="M14.5 15.5a3.5 3.5 0 0 0 7 0L18 8.5z"/>',
+  bell: '<path d="M12 3.5a5.5 5.5 0 0 0-5.5 5.5v3.5l-1.7 3.2a1 1 0 0 0 .9 1.5h12.6a1 1 0 0 0 .9-1.5L17.5 12.5V9A5.5 5.5 0 0 0 12 3.5z"/><path d="M9.6 19.5a2.4 2.4 0 0 0 4.8 0"/>',
+};
+function icon(name, opts){
+  opts = opts || {};
+  const size = opts.size || 20;
+  const stroke = opts.stroke !== undefined ? opts.stroke : 1.75;
+  const cls = opts.cls || '';
+  const decorative = opts.decorative !== false;
+  const path = ICONS[name] || '';
+  return '<svg class="ic '+cls+'" width="'+size+'" height="'+size+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+stroke+'" stroke-linecap="round" stroke-linejoin="round" '+(decorative?'aria-hidden="true" focusable="false"':'role="img"')+'>'+path+'</svg>';
+}
+
+/* ---------------- Storage helpers ---------------- */
+function storeGet(key, fallback){
+  try{ const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+  catch(e){ return fallback; }
+}
+function storeSet(key, val){
+  try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){}
+}
+
+/* ---------------- Seeded random for stable mock slots ---------------- */
+function seededRandom(seed){
+  let s = seed % 2147483647; if (s <= 0) s += 2147483646;
+  return function(){ s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
+}
+function hashStr(str){ let h=0; for(let i=0;i<str.length;i++){ h = (h*31 + str.charCodeAt(i)) | 0; } return Math.abs(h); }
+
+/* ---------------- Data: specialties ---------------- */
+const SPECIALTIES = [
+  {id:'therapist', name:'Терапевт', icon:'spec_therapist'},
+  {id:'lor', name:'ЛОР', icon:'spec_lor'},
+  {id:'cardio', name:'Кардиолог', icon:'spec_cardio'},
+  {id:'neuro', name:'Невролог', icon:'spec_neuro'},
+  {id:'derma', name:'Дерматолог', icon:'spec_derma'},
+  {id:'ophtal', name:'Офтальмолог', icon:'spec_ophtal'},
+  {id:'gastro', name:'Гастроэнтеролог', icon:'spec_gastro'},
+  {id:'endocrine', name:'Эндокринолог', icon:'spec_endocrine'},
+  {id:'uro', name:'Уролог', icon:'spec_uro'},
+  {id:'gyneco', name:'Гинеколог', icon:'spec_gyneco'},
+  {id:'pediatric', name:'Педиатр', icon:'spec_pediatric'},
+  {id:'dentist', name:'Стоматолог', icon:'spec_dentist'},
+  {id:'surgeon', name:'Хирург', icon:'spec_surgeon'},
+  {id:'psy', name:'Психолог', icon:'spec_psy'},
+];
+function specName(id){ const s = SPECIALTIES.find(x=>x.id===id); return s ? s.name : id; }
+function specIconName(id){ const s = SPECIALTIES.find(x=>x.id===id); return s ? s.icon : 'spec_therapist'; }
+
+/* ---------------- Data: clinics ---------------- */
+const DISTRICTS = ['Медеуский','Алмалинский','Бостандыкский','Ауэзовский','Турксибский','Жетысуский','Наурызбайский','Алатауский'];
+const SERVICE_CATALOG = ['Приём терапевта','УЗИ органов брюшной полости','Общий анализ крови','ЭКГ','Приём стоматолога','Приём педиатра'];
+const CLINICS = [
+  {id:'c1', name:'Медицинский центр «Эверест»', addr:'ул. Достык, 89, Медеуский р-н, Алматы', district:'Медеуский', phone:'+7 727 258-11-40', site:'everest-med.kz', workDays:'Пн–Сб', workHours:'08:00–20:00', openDays:[1,2,3,4,5,6], openFrom:8, openTo:20, color:'#0891B2', x:64, y:36, emergency24:true, services:[{name:'Приём терапевта',price:8000},{name:'УЗИ органов брюшной полости',price:12000},{name:'Общий анализ крови',price:3500},{name:'ЭКГ',price:5000}], priceList:{'Приём терапевта':8000,'УЗИ органов брюшной полости':12000,'Общий анализ крови':3500,'ЭКГ':5000,'Приём стоматолога':13000,'Приём педиатра':8500}},
+  {id:'c2', name:'Клиника «Жансая»', addr:'ул. Абая, 150, Алмалинский р-н, Алматы', district:'Алмалинский', phone:'+7 727 266-73-02', site:'jansaya-clinic.kz', workDays:'Ежедневно', workHours:'09:00–21:00', openDays:[0,1,2,3,4,5,6], openFrom:9, openTo:21, color:'#16A34A', x:46, y:53, emergency24:false, services:[{name:'Приём ЛОР-врача',price:9500},{name:'Промывание пазух носа',price:6000},{name:'Приём дерматолога',price:10000},{name:'Чистка зубов',price:15000}], priceList:{'Приём терапевта':7500,'УЗИ органов брюшной полости':11000,'Общий анализ крови':3000,'ЭКГ':4500,'Приём стоматолога':15000,'Приём педиатра':null}},
+  {id:'c3', name:'Семейный центр здоровья «Нур-Мед»', addr:'мкр. Самал-2, д. 33, Бостандыкский р-н, Алматы', district:'Бостандыкский', phone:'+7 727 311-45-88', site:'nur-med.kz', workDays:'Пн–Вс', workHours:'08:30–19:30', openDays:[0,1,2,3,4,5,6], openFrom:8.5, openTo:19.5, color:'#0E7490', x:29, y:41, emergency24:false, services:[{name:'Приём невролога',price:11000},{name:'Приём эндокринолога',price:10500},{name:'МРТ головного мозга',price:35000},{name:'Консультация психолога',price:12000}], priceList:{'Приём терапевта':9000,'УЗИ органов брюшной полости':13500,'Общий анализ крови':4000,'ЭКГ':5500,'Приём стоматолога':null,'Приём педиатра':null}},
+  {id:'c4', name:'Клиника «Кардиум»', addr:'ул. Розыбакиева, 247, Бостандыкский р-н, Алматы', district:'Бостандыкский', phone:'+7 727 394-20-15', site:'cardium.kz', workDays:'Пн–Сб', workHours:'08:00–19:00', openDays:[1,2,3,4,5,6], openFrom:8, openTo:19, color:'#DC2626', x:27, y:63, emergency24:true, services:[{name:'Приём кардиолога',price:15000},{name:'Холтер ЭКГ (24ч)',price:18000},{name:'Приём гинеколога',price:14000},{name:'Приём офтальмолога',price:12000}], priceList:{'Приём терапевта':10000,'УЗИ органов брюшной полости':14000,'Общий анализ крови':4200,'ЭКГ':6000,'Приём стоматолога':null,'Приём педиатра':null}},
+  {id:'c5', name:'Детско-семейная клиника «Балапан+»', addr:'ул. Толе би, 101, Ауэзовский р-н, Алматы', district:'Ауэзовский', phone:'+7 727 227-90-64', site:'balapan-plus.kz', workDays:'Ежедневно', workHours:'08:00–22:00', openDays:[0,1,2,3,4,5,6], openFrom:8, openTo:22, color:'#0369A1', x:57, y:71, emergency24:false, services:[{name:'Приём педиатра',price:9000},{name:'Вакцинация',price:7000},{name:'Приём стоматолога (детский)',price:12000},{name:'Общий анализ мочи',price:2500}], priceList:{'Приём терапевта':7000,'УЗИ органов брюшной полости':10500,'Общий анализ крови':2800,'ЭКГ':4200,'Приём стоматолога':12000,'Приём педиатра':9000}},
+];
+function isOpenNow(c){
+  const now = new Date();
+  const day = now.getDay();
+  const hour = now.getHours() + now.getMinutes()/60;
+  return c.openDays.indexOf(day) !== -1 && hour >= c.openFrom && hour < c.openTo;
+}
+function clinicDistanceKm(c){
+  const rnd = seededRandom(hashStr(c.id+'-distance'));
+  return Math.round((0.6 + rnd()*7.2)*10)/10;
+}
+function clinicHasSlotToday(c){
+  const docs = doctorsByClinic(c.id);
+  const today = new Date();
+  return docs.some(d => slotsForDoctorDate(d.id, today).some(s=>!s.busy));
+}
+function clinicById(id){ return CLINICS.find(c=>c.id===id); }
+
+/* ---------------- Data: doctors ---------------- */
+const RAW_DOCTORS = [
+  {id:'d1', name:'Иванова Анна Сергеевна', spec:'therapist', clinic:'c1', exp:12, rating:4.8, reviews:127, price:8000, langs:['рус','каз'], edu:'КазНМУ им. Асфендиярова, лечебное дело', about:'Специализируется на диагностике и лечении распространённых заболеваний, ведении пациентов с хроническими состояниями.'},
+  {id:'d2', name:'Ахметова Гульнара Болатовна', spec:'lor', clinic:'c2', exp:9, rating:4.7, reviews:84, price:9500, langs:['рус','каз','англ'], edu:'КазНМУ им. Асфендиярова, оториноларингология', about:'Лечение заболеваний уха, горла и носа у взрослых и детей, эндоскопическая диагностика.'},
+  {id:'d3', name:'Ким Виктор Олегович', spec:'cardio', clinic:'c1', exp:18, rating:4.9, reviews:203, price:15000, langs:['рус','англ'], edu:'Алматинский институт усовершенствования врачей, кардиология', about:'Диагностика и ведение пациентов с артериальной гипертензией, ишемической болезнью сердца, аритмиями.'},
+  {id:'d4', name:'Нурланова Алия Ержановна', spec:'neuro', clinic:'c3', exp:7, rating:4.6, reviews:56, price:11000, langs:['рус','каз'], edu:'КазНМУ им. Асфендиярова, неврология', about:'Лечение головных болей, головокружений, заболеваний периферической нервной системы.'},
+  {id:'d5', name:'Петров Сергей Игоревич', spec:'derma', clinic:'c2', exp:10, rating:4.5, reviews:71, price:10000, langs:['рус'], edu:'Карагандинский медицинский университет, дерматовенерология', about:'Диагностика заболеваний кожи, лечение акне, дерматитов, консультации по родинкам.'},
+  {id:'d6', name:'Сатыбалдиева Жанна Дауреновна', spec:'ophtal', clinic:'c4', exp:14, rating:4.8, reviews:98, price:12000, langs:['рус','каз'], edu:'КазНМУ им. Асфендиярова, офтальмология', about:'Диагностика зрения, подбор коррекции, ведение пациентов с глаукомой и катарактой.'},
+  {id:'d7', name:'Ли Дмитрий Александрович', spec:'gastro', clinic:'c1', exp:11, rating:4.7, reviews:63, price:11500, langs:['рус','англ'], edu:'КазНМУ им. Асфендиярова, гастроэнтерология', about:'Лечение заболеваний желудочно-кишечного тракта, гастроскопия, ведение пациентов с рефлюксом.'},
+  {id:'d8', name:'Тулегенова Асель Маратовна', spec:'endocrine', clinic:'c3', exp:8, rating:4.6, reviews:45, price:10500, langs:['рус','каз'], edu:'Западно-Казахстанский медицинский университет, эндокринология', about:'Ведение пациентов с сахарным диабетом, заболеваниями щитовидной железы, коррекция веса.'},
+  {id:'d9', name:'Смагулов Ерлан Талгатович', spec:'uro', clinic:'c2', exp:15, rating:4.7, reviews:89, price:13000, langs:['рус','каз'], edu:'КазНМУ им. Асфендиярова, урология', about:'Диагностика и лечение урологических заболеваний, УЗИ-диагностика.'},
+  {id:'d10', name:'Романова Ольга Викторовна', spec:'gyneco', clinic:'c4', exp:13, rating:4.9, reviews:156, price:14000, langs:['рус','англ'], edu:'КазНМУ им. Асфендиярова, акушерство и гинекология', about:'Ведение беременности, плановые осмотры, диагностика и лечение гинекологических заболеваний.'},
+  {id:'d11', name:'Байжанова Динара Сериковна', spec:'pediatric', clinic:'c5', exp:10, rating:4.9, reviews:178, price:9000, langs:['рус','каз','англ'], edu:'КазНМУ им. Асфендиярова, педиатрия', about:'Наблюдение детей с рождения, вакцинация, лечение частых детских заболеваний.'},
+  {id:'d12', name:'Черных Максим Андреевич', spec:'dentist', clinic:'c5', exp:9, rating:4.6, reviews:92, price:12000, langs:['рус'], edu:'КазНМУ им. Асфендиярова, стоматология', about:'Терапевтическая стоматология, лечение кариеса, профессиональная гигиена полости рта.'},
+  {id:'d13', name:'Абенова Сауле Нурлановна', spec:'surgeon', clinic:'c1', exp:20, rating:4.8, reviews:134, price:18000, langs:['рус','каз'], edu:'КазНМУ им. Асфендиярова, общая хирургия', about:'Плановые и экстренные хирургические вмешательства, консультации по хирургической патологии.'},
+  {id:'d14', name:'Григорьев Павел Николаевич', spec:'psy', clinic:'c3', exp:6, rating:4.7, reviews:67, price:12000, langs:['рус','англ'], edu:'КазНПУ им. Абая, клиническая психология', about:'Работа с тревожными состояниями, стрессом, нарушениями сна, семейное консультирование.'},
+  {id:'d15', name:'Каримова Жанар Асхатовна', spec:'therapist', clinic:'c5', exp:5, rating:4.5, reviews:38, price:7000, langs:['рус','каз'], edu:'Южно-Казахстанская медицинская академия, лечебное дело', about:'Первичная диагностика, ведение пациентов с ОРВИ, консультации по профилактике заболеваний.'},
+  {id:'d16', name:'Соколов Артём Викторович', spec:'dentist', clinic:'c2', exp:14, rating:4.8, reviews:121, price:13500, langs:['рус','англ'], edu:'КазНМУ им. Асфендиярова, стоматология', about:'Эстетическая и терапевтическая стоматология, протезирование, лечение осложнённого кариеса.'},
+  {id:'d17', name:'Жумабекова Айгерим Олжасовна', spec:'lor', clinic:'c4', exp:6, rating:4.5, reviews:41, price:8500, langs:['рус','каз'], edu:'КазНМУ им. Асфендиярова, оториноларингология', about:'Лечение хронических синуситов, отитов, консультации по нарушениям слуха.'},
+];
+const AVATAR_COLORS = ['#0891B2','#16A34A','#0E7490','#DC2626','#7C3AED','#0369A1','#C2410C'];
+const DOCTORS = RAW_DOCTORS.map((d,i)=>{
+  const initials = d.name.split(' ').slice(0,2).map(p=>p[0]).join('');
+  return Object.assign({}, d, {
+    initials,
+    color: AVATAR_COLORS[i % AVATAR_COLORS.length],
+    formats: (i%3===0) ? ['Очно','Онлайн'] : ['Очно'],
+  });
+});
+function doctorById(id){ return DOCTORS.find(d=>d.id===id); }
+function doctorsByClinic(cid){ return DOCTORS.filter(d=>d.clinic===cid); }
+
+/* ---------------- Reviews (templated pool, deterministic per doctor) ---------------- */
+const REVIEW_NAMES = ['Айгуль К.','Дмитрий В.','Марат С.','Елена П.','Нурлан Б.','Ольга Т.','Тимур А.','Жанна Р.','Виктория М.','Асхат Н.','Светлана Д.','Ержан Қ.'];
+const REVIEW_TEXTS = [
+  'Очень внимательный врач, подробно объяснил суть проблемы и дальнейшие шаги. Приём прошёл без задержек.',
+  'Понравилось отношение — не спешил, ответил на все вопросы. Единственное, пришлось немного подождать в очереди.',
+  'Профессионал своего дела. Назначенное лечение помогло, повторно записалась бы именно к этому специалисту.',
+  'Хороший врач, но запись на приём стоило бы сделать удобнее — долго искала свободное время.',
+  'Спокойная, доброжелательная атмосфера приёма. Врач подробно расспросил о симптомах перед тем, как делать выводы.',
+  'Приём начался вовремя, врач всё понятно объяснил простыми словами, без лишних медицинских терминов.',
+  'Обращались всей семьёй — везде внимательное отношение и понятные рекомендации после приёма.',
+  'Достаточно быстро разобрались с проблемой, направили на нужные анализы. Рекомендую.',
+];
+function pickReviewName(entityId, i){
+  // Separately-salted seed per review so names don't cluster on the first
+  // RNG output (small seeds otherwise correlate and over-favor one name).
+  const nameRnd = seededRandom(hashStr(entityId+'-name-'+i));
+  nameRnd(); nameRnd(); nameRnd();
+  return REVIEW_NAMES[Math.floor(nameRnd()*REVIEW_NAMES.length)];
+}
+function reviewsFor(entityId, count){
+  const rnd = seededRandom(hashStr(entityId));
+  const out = [];
+  for(let i=0;i<count;i++){
+    const name = pickReviewName(entityId, i);
+    const text = REVIEW_TEXTS[Math.floor(rnd()*REVIEW_TEXTS.length)];
+    const day = 1 + Math.floor(rnd()*27);
+    const monthIdx = Math.floor(rnd()*9);
+    const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября'];
+    const overall = Math.round((4 + rnd()*1)*2)/2;
+    out.push({
+      name, text, date: day+' '+months[monthIdx]+' 2026',
+      overall: overall > 5 ? 5 : overall,
+      treatment: Math.min(5, Math.round((overall + (rnd()-0.5)*0.8)*2)/2),
+      attitude: Math.min(5, Math.round((overall + (rnd()-0.5)*0.8)*2)/2),
+      wait: Math.min(5, Math.round((overall - rnd()*1.2)*2)/2),
+      expectation: Math.min(5, Math.round((overall + (rnd()-0.5)*0.6)*2)/2),
+      explanation: Math.min(5, Math.round((overall + (rnd()-0.5)*0.7)*2)/2),
+      priceValue: Math.min(5, Math.round((overall - rnd()*0.9)*2)/2),
+      recommend: Math.min(5, Math.round((overall + (rnd()-0.3)*0.5)*2)/2),
+      verified: rnd() < 0.78,
+    });
+  }
+  return out;
+}
+
+/* ---------------- Schedule / slots ---------------- */
+const WEEKDAYS = ['вс','пн','вт','ср','чт','пт','сб'];
+function nextNDates(n){
+  const out = [];
+  const today = new Date();
+  for(let i=0;i<n;i++){
+    const d = new Date(today); d.setDate(today.getDate()+i);
+    out.push(d);
+  }
+  return out;
+}
+function dateKey(d){ return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate(); }
+function formatDateHuman(d){
+  const months = ['янв','фев','мар','апр','мая','июн','июл','авг','сен','окт','ноя','дек'];
+  return d.getDate()+' '+months[d.getMonth()];
+}
+function slotsForDoctorDate(doctorId, d){
+  const rnd = seededRandom(hashStr(doctorId+dateKey(d)));
+  const slots = [];
+  for(let h=9; h<18; h++){
+    for(let m of [0,30]){
+      const busy = rnd() < 0.38;
+      slots.push({time: String(h).padStart(2,'0')+':'+String(m).padStart(2,'0'), busy});
+    }
+  }
+  return slots;
+}
+function firstFreeSlotLabel(doctorId){
+  const dates = nextNDates(5);
+  for(const d of dates){
+    const slots = slotsForDoctorDate(doctorId, d);
+    const free = slots.find(s=>!s.busy);
+    if(free){
+      const isToday = dateKey(d)===dateKey(new Date());
+      return (isToday? 'Сегодня, ' : formatDateHuman(d)+', ') + free.time;
+    }
+  }
+  return 'по запросу';
+}
+function firstFreeSlot(doctorId){
+  const dates = nextNDates(14);
+  for(const d of dates){
+    const slots = slotsForDoctorDate(doctorId, d);
+    const free = slots.find(s=>!s.busy);
+    if(free) return {date: d, dateKey: dateKey(d), time: free.time};
+  }
+  return null;
+}
+function earliestForSpec(specId){
+  const docs = DOCTORS.filter(d=>d.spec===specId);
+  const rows = docs.map(function(d){
+    const slot = firstFreeSlot(d.id);
+    return {doctor:d, slot:slot};
+  }).filter(function(r){ return r.slot; });
+  rows.sort(function(a,b){
+    const ak = a.slot.dateKey+' '+a.slot.time, bk = b.slot.dateKey+' '+b.slot.time;
+    if(a.slot.date.getTime() !== b.slot.date.getTime()) return a.slot.date - b.slot.date;
+    return a.slot.time.localeCompare(b.slot.time);
+  });
+  return rows;
+}
+
+/* ---------------- Symptom checker ---------------- */
+const SYMPTOM_MAP = [
+  {kw:['горло','глотать','глотание','кашель','насморк','нос заложен','заложен нос','чихание'], specs:['lor','therapist']},
+  {kw:['ухо','уши','слух','боль в ухе'], specs:['lor']},
+  {kw:['живот','тошнота','рвота','изжога','желудок','понос','диарея','запор','вздутие'], specs:['gastro','therapist']},
+  {kw:['голова','мигрень','головокруж','головная боль'], specs:['neuro','therapist']},
+  {kw:['сердце','давление','грудь','грудная клетка','одышка','сердцебиение'], specs:['cardio','therapist']},
+  {kw:['кожа','сыпь','зуд','аллерг','покраснение','пятна на коже'], specs:['derma']},
+  {kw:['глаза','зрение','видит','резь в глазах'], specs:['ophtal']},
+  {kw:['сахар','жажда','похудение','щитовид'], specs:['endocrine','therapist']},
+  {kw:['почки','мочеиспускание','мочевой'], specs:['uro']},
+  {kw:['беременность','менструация','гинеколог','выделения'], specs:['gyneco']},
+  {kw:['ребёнок','ребенок','малыш','дочь','сын'], specs:['pediatric']},
+  {kw:['зуб','зубная боль','дёсны','десны'], specs:['dentist']},
+  {kw:['тревога','стресс','депрессия','сон','бессонница','паника'], specs:['psy']},
+  {kw:['перелом','травма','рана','ушиб'], specs:['surgeon', 'therapist']},
+  {kw:['температура','озноб','слабость'], specs:['therapist']},
+];
+const RED_FLAGS = ['сильная боль в груди','боль в груди','не могу дышать','трудно дышать','задыхаюсь','тяжело дышать','потерял сознание','потеряла сознание','обморок','сильное кровотечение','обильное кровотечение','инсульт','паралич','отнялась','судороги','не может говорить','перекосило лицо','посинели губы','посинели'];
+function hasRedFlags(text){
+  const t = text.toLowerCase();
+  return RED_FLAGS.some(k=>t.indexOf(k)!==-1);
+}
+function analyzeSymptoms(text, answers){
+  const t = text.toLowerCase();
+  const score = {};
+  SYMPTOM_MAP.forEach(row=>{
+    row.kw.forEach(k=>{
+      if(t.indexOf(k) !== -1){
+        row.specs.forEach(s=>{ score[s] = (score[s]||0) + 1; });
+      }
+    });
+  });
+  if(Object.keys(score).length===0){ score.therapist = 1; }
+  if(answers){
+    if(answers.fever==='high'){ score.therapist = (score.therapist||0) + 1.2; }
+    if(answers.duration==='long'){ Object.keys(score).forEach(function(k){ if(k!=='therapist') score[k]+=0.6; }); }
+    if(answers.severity==='severe'){ Object.keys(score).forEach(function(k){ score[k]+=0.4; }); }
+  }
+  let entries = Object.entries(score).sort((a,b)=>b[1]-a[1]);
+  if(entries.length === 0){ return ['therapist']; }
+  return entries.slice(0,2).map(e=>e[0]);
+}
+
+/* ---------------- App state ---------------- */
+const state = {
+  user: storeGet('mc_user', null),
+  accounts: storeGet('mc_accounts', []),
+  favDoctors: storeGet('mc_fav_doctors', []),
+  favClinics: storeGet('mc_fav_clinics', []),
+  bookings: storeGet('mc_bookings', []),
+  myReviews: storeGet('mc_my_reviews', []),
+  medProfile: storeGet('mc_medprofile', {
+    allergies: ['Пенициллин', 'Пыльца амброзии'],
+    labResults: [
+      {name:'Общий анализ крови', date:'12 августа 2026', clinic:'Медицинский центр «Эверест»', status:'Готово'},
+      {name:'Общий анализ мочи', date:'3 июня 2026', clinic:'Клиника «Жансая»', status:'Готово'},
+    ],
+    prescriptions: [
+      {drug:'Амоксициллин 500 мг', dosage:'по 1 таблетке 3 раза в день, 7 дней', doctor:'Иванова А. С.', date:'15 июля 2026'},
+    ],
+    documents: [
+      {name:'Выписка из истории болезни.pdf', date:'2 мая 2026'},
+    ],
+  }),
+  bookingDraft: {},
+  compareDoctors: storeGet('mc_compare_doctors', []),
+  waitlist: storeGet('mc_waitlist', []),
+  clinicAdminOverrides: storeGet('mc_clinic_admin', {}),
+  clinicAdminSession: storeGet('mc_clinic_admin_session', null),
+};
+function saveState(){
+  storeSet('mc_user', state.user);
+  storeSet('mc_accounts', state.accounts);
+  storeSet('mc_fav_doctors', state.favDoctors);
+  storeSet('mc_fav_clinics', state.favClinics);
+  storeSet('mc_bookings', state.bookings);
+  storeSet('mc_my_reviews', state.myReviews);
+  storeSet('mc_medprofile', state.medProfile);
+  storeSet('mc_compare_doctors', state.compareDoctors);
+  storeSet('mc_waitlist', state.waitlist);
+  storeSet('mc_clinic_admin', state.clinicAdminOverrides);
+  storeSet('mc_clinic_admin_session', state.clinicAdminSession);
+}
+function toggleFav(kind, id){
+  const arr = kind==='doctor' ? state.favDoctors : state.favClinics;
+  const idx = arr.indexOf(id);
+  if(idx===-1) arr.push(id); else arr.splice(idx,1);
+  saveState();
+}
+function isFav(kind, id){
+  return (kind==='doctor' ? state.favDoctors : state.favClinics).indexOf(id) !== -1;
+}
+
+/* ---------------- Doctor comparison tray ---------------- */
+const COMPARE_MAX = 4;
+function isCompared(id){ return state.compareDoctors.indexOf(id) !== -1; }
+function toggleCompare(id){
+  const arr = state.compareDoctors;
+  const idx = arr.indexOf(id);
+  if(idx !== -1){ arr.splice(idx,1); saveState(); return true; }
+  if(arr.length >= COMPARE_MAX){ showToast('Можно сравнить не более '+COMPARE_MAX+' врачей'); return false; }
+  arr.push(id); saveState(); return true;
+}
+function clearCompare(){ state.compareDoctors = []; saveState(); }
+
+/* ---------------- Waiting list ---------------- */
+function isOnWaitlist(doctorId){ return state.waitlist.some(function(w){ return w.doctorId===doctorId && !w.cancelled; }); }
+function joinWaitlist(doctorId, note){
+  if(isOnWaitlist(doctorId)) return;
+  state.waitlist.push({id:'WL-'+Math.floor(100000+Math.random()*899999), doctorId:doctorId, note: note||'', createdAt: Date.now()});
+  saveState();
+}
+function leaveWaitlist(entryId){
+  const w = state.waitlist.find(function(x){ return x.id===entryId; });
+  if(w){ w.cancelled = true; saveState(); }
+}
+function waitlistSlotOpened(entry){
+  // Deterministic simulated "an earlier slot opened up" check, stable per entry.
+  const rnd = seededRandom(hashStr(entry.id+'-opened'));
+  return rnd() < 0.55;
+}
+function waitlistOpenedLabel(entry){
+  const rnd = seededRandom(hashStr(entry.id+'-openedtime'));
+  const dates = nextNDates(3);
+  const d = dates[Math.floor(rnd()*dates.length)];
+  const hour = 9 + Math.floor(rnd()*8);
+  const min = rnd()<0.5?'00':'30';
+  const isToday = dateKey(d)===dateKey(new Date());
+  return (isToday?'Сегодня, ':formatDateHuman(d)+', ')+String(hour).padStart(2,'0')+':'+min;
+}
+
+/* ---------------- Clinic admin overlay helpers (mock backend patch layer) ---------------- */
+function clinicOverride(clinicId){
+  if(!state.clinicAdminOverrides[clinicId]) state.clinicAdminOverrides[clinicId] = {addedDoctors:[], removedDoctorIds:[], doctorEdits:{}, schedule:null};
+  return state.clinicAdminOverrides[clinicId];
+}
+function effectiveDoctorsByClinic(cid){
+  const ov = state.clinicAdminOverrides[cid];
+  let list = doctorsByClinic(cid);
+  if(ov){
+    if(ov.removedDoctorIds && ov.removedDoctorIds.length) list = list.filter(function(d){ return ov.removedDoctorIds.indexOf(d.id)===-1; });
+    if(ov.doctorEdits) list = list.map(function(d){ return ov.doctorEdits[d.id] ? Object.assign({}, d, ov.doctorEdits[d.id]) : d; });
+    if(ov.addedDoctors && ov.addedDoctors.length) list = list.concat(ov.addedDoctors);
+  }
+  return list;
+}
+function effectiveClinicSchedule(c){
+  const ov = state.clinicAdminOverrides[c.id];
+  if(ov && ov.schedule) return ov.schedule;
+  return {openDays: c.openDays, openFrom: c.openFrom, openTo: c.openTo, workDays: c.workDays, workHours: c.workHours};
+}
+
+/* ---------------- Toast ---------------- */
+let toastTimer=null;
+function showToast(msg){
+  let el = document.getElementById('toast');
+  if(!el){ el = document.createElement('div'); el.id='toast'; el.className='toast'; el.setAttribute('role','status'); el.setAttribute('aria-live','polite'); document.body.appendChild(el); }
+  el.textContent = msg;
+  el.style.display='block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ el.style.display='none'; }, 2400);
+}
+
+/* ---------------- Small render helpers ---------------- */
+function starsSvg(rating){
+  const full = Math.round(rating);
+  let out = '<span class="stars" aria-hidden="true">';
+  for(let i=1;i<=5;i++){
+    out += i<=full ? icon('starFilled',{size:14,stroke:1.5}) : icon('star',{size:14,stroke:1.5,cls:'',});
+  }
+  return out+'</span>';
+}
+function initialsAvatar(initials, color, size){
+  size = size || 56;
+  return '<div class="avatar" style="width:'+size+'px;height:'+size+'px;background:'+color+';font-size:'+Math.round(size*0.34)+'px;">'+initials+'</div>';
+}
+function tel(phone){ return '<a href="tel:'+phone.replace(/[^+\d]/g,'')+'">'+phone+'</a>'; }
+
+function doctorCard(d, opts){
+  opts = opts || {};
+  const clinic = clinicById(d.clinic);
+  const fav = isFav('doctor', d.id);
+  const compared = isCompared(d.id);
+  return '<div class="doc-card">'
+    + '<div style="display:flex;justify-content:space-between;">'
+    +   '<div class="doc-top">'
+    +     initialsAvatar(d.initials, d.color)
+    +     '<div><div class="doc-name">'+d.name+'</div><div class="doc-spec">'+icon(specIconName(d.spec),{size:15})+' '+specName(d.spec)+'</div><div class="doc-clinic">'+clinic.name+'</div></div>'
+    +   '</div>'
+    +   '<div style="display:flex;gap:6px;flex-shrink:0;">'
+    +   (opts.noCompare ? '' : '<button class="icon-btn" data-action="toggle-compare-doctor" data-id="'+d.id+'" aria-pressed="'+compared+'" aria-label="'+(compared?'Убрать из сравнения':'Добавить к сравнению')+'" title="Сравнить врачей" style="width:38px;height:38px;'+(compared?'color:var(--primary);border-color:var(--primary);background:var(--primary-tint);':'')+'">'+icon(compared?'check':'scale',{size:16})+'</button>')
+    +   '<button class="icon-btn" data-action="toggle-fav-doctor" data-id="'+d.id+'" aria-pressed="'+fav+'" aria-label="'+(fav?'Убрать из избранного':'Добавить в избранное')+'" style="width:38px;height:38px;'+(fav?'color:var(--danger);border-color:var(--danger);':'')+'">'+icon(fav?'heartFilled':'heartOutline',{size:17})+'</button>'
+    +   '</div>'
+    + '</div>'
+    + '<div class="rating-row">'+starsSvg(d.rating)+'<span class="rating-num">'+d.rating.toFixed(1)+'</span><span class="rating-count">('+d.reviews+' отзывов)</span></div>'
+    + '<div class="doc-meta"><span class="tag">Стаж '+d.exp+' лет</span><span class="tag">'+d.langs.join(', ')+'</span>'+d.formats.map(f=>'<span class="tag">'+f+'</span>').join('')+'</div>'
+    + '<div class="doc-about">'+d.about+'</div>'
+    + '<div class="doc-bottom">'
+    +   '<div><div class="price">'+d.price.toLocaleString('ru-RU')+' ₸</div><div class="price-slot">за приём</div></div>'
+    +   '<div style="text-align:right;"><div class="slot-next">'+icon('clock',{size:13})+firstFreeSlotLabel(d.id)+'</div><div class="price-slot">ближайшая запись</div></div>'
+    + '</div>'
+    + '<div class="doc-btns"><a class="btn btn-outline btn-sm" style="flex:1;" href="#/doctor/'+d.id+'">Подробнее</a><a class="btn btn-primary btn-sm" style="flex:1;" href="#/booking/'+d.id+'">Записаться</a></div>'
+  + '</div>';
+}
+
+function clinicCard(c){
+  const docs = doctorsByClinic(c.id);
+  const avgRating = docs.length ? (docs.reduce((s,d)=>s+d.rating,0)/docs.length) : 4.7;
+  const totalReviews = docs.reduce((s,d)=>s+d.reviews,0);
+  const fav = isFav('clinic', c.id);
+  return '<div class="clinic-card">'
+    + '<div class="clinic-photo" style="background:'+c.color+';">'+icon('building',{size:36,stroke:1.4})
+    +   '<button class="icon-btn" data-action="toggle-fav-clinic" data-id="'+c.id+'" aria-pressed="'+fav+'" aria-label="'+(fav?'Убрать из избранного':'Добавить в избранное')+'" style="position:absolute;top:10px;right:10px;background:rgba(255,255,255,.92);border:none;width:38px;height:38px;'+(fav?'color:var(--danger);':'')+'">'+icon(fav?'heartFilled':'heartOutline',{size:16})+'</button>'
+    + '</div>'
+    + '<div class="clinic-body">'
+    +   '<div class="clinic-name">'+c.name+'</div>'
+    +   '<div class="clinic-addr">'+icon('mappin',{size:14})+'<span>'+c.addr+'</span></div>'
+    +   '<div class="rating-row">'+starsSvg(avgRating)+'<span class="rating-num">'+avgRating.toFixed(1)+'</span><span class="rating-count">('+totalReviews+')</span></div>'
+    +   '<div class="doc-meta"><span class="tag">'+c.district+' р-н</span><span class="tag" style="color:'+(isOpenNow(c)?'var(--ok)':'var(--ink-faint)')+';">'+(isOpenNow(c)?'Открыто сейчас':'Закрыто')+'</span><span class="tag">≈'+clinicDistanceKm(c)+' км</span><span class="tag">'+docs.length+' врачей</span>'+(c.emergency24?'<span class="tag" style="color:var(--danger);background:var(--danger-tint);">Скорая 24/7</span>':'')+'</div>'
+    +   '<div class="clinic-foot"><a class="btn btn-outline btn-sm btn-block" href="#/clinic/'+c.id+'">Посмотреть врачей клиники</a></div>'
+    + '</div>'
+  + '</div>';
+}
+
+function reviewCard(r){
+  return '<div class="review-card">'
+    + '<div class="rev-head"><span class="rev-author">'+r.name+'</span><span class="rev-date">'+r.date+'</span></div>'
+    + '<div class="rating-row">'+starsSvg(r.overall)+'<span class="rating-num">'+r.overall.toFixed(1)+'</span>'
+    +   (r.verified ? '<span class="tag" style="color:var(--ok);background:var(--ok-tint);display:inline-flex;align-items:center;gap:4px;" title="Пациент был записан на приём через Medify">'+icon('shieldCheck',{size:12})+'Подтверждённый отзыв</span>' : '')
+    + '</div>'
+    + '<div class="rev-text">'+r.text+'</div>'
+    + (r.recommend!==undefined ? '<div style="font-size:12px;color:var(--ink-faint);margin-top:8px;">Вероятность рекомендовать: <b style="color:var(--ink-soft);">'+r.recommend.toFixed(1)+'/5</b></div>' : '')
+  + '</div>';
+}
+
+function heroArtSvg(){
+  return '<svg viewBox="0 0 380 340" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Иллюстрация записи на приём к врачу">'
+  + '<circle cx="190" cy="170" r="150" fill="var(--primary-tint)"/>'
+  + '<rect x="88" y="86" width="204" height="164" rx="18" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>'
+  + '<rect x="110" y="112" width="64" height="9" rx="4.5" fill="var(--primary)"/>'
+  + '<rect x="110" y="132" width="122" height="6" rx="3" fill="var(--line)"/>'
+  + '<rect x="110" y="146" width="92" height="6" rx="3" fill="var(--line)"/>'
+  + '<rect x="110" y="172" width="158" height="48" rx="10" fill="var(--primary-tint)"/>'
+  + '<text x="122" y="201" font-family="Figtree, sans-serif" font-weight="700" font-size="19" fill="var(--primary-dark)">09:30 — 10:00</text>'
+  + '<g transform="translate(228,100)" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">'
+  +   '<circle cx="14" cy="14" r="14" fill="var(--accent)" stroke="none"/>'
+  +   '<polyline points="8,14.5 12,18.5 20,9.5"/>'
+  + '</g>'
+  + '<circle cx="78" cy="252" r="32" fill="var(--accent-tint)" stroke="var(--accent)" stroke-width="2"/>'
+  + '<path d="M78 240c-4.2 0-7.6 3.3-7.6 7.4 0 6.6 7.6 12 7.6 12s7.6-5.4 7.6-12c0-4.1-3.4-7.4-7.6-7.4z" fill="var(--accent)"/>'
+  + '<circle cx="308" cy="240" r="24" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>'
+  + '<g transform="translate(296,228)" stroke="var(--primary)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">'
+  +   '<circle cx="6" cy="4" r="1.5"/><path d="M6 5.5v4.6a3.8 3.8 0 0 0 7.6 0V7.5"/><path d="M13.6 7.5a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4z"/>'
+  + '</g>'
+  + '</svg>';
+}
+
+/* ---------------- Compare tray ---------------- */
+function renderCompareTray(){
+  if(!state.compareDoctors.length) return '';
+  const docs = state.compareDoctors.map(doctorById).filter(Boolean);
+  return '<div class="compare-tray" id="compare-tray">'
+    + '<div class="compare-tray-inner">'
+    +   icon('scale',{size:18,cls:''})
+    +   '<div class="compare-tray-avatars">'
+    +     docs.map(function(d){ return '<span class="compare-tray-chip">'+initialsAvatar(d.initials,d.color,26)+d.name.split(' ')[0]+' '+(d.name.split(' ')[1]||'')+'<button type="button" data-action="toggle-compare-doctor" data-id="'+d.id+'" aria-label="Убрать из сравнения">'+icon('close',{size:12})+'</button></span>'; }).join('')
+    +   '</div>'
+    +   '<button class="btn btn-ghost btn-sm" type="button" data-action="clear-compare">Очистить</button>'
+    +   '<a class="btn btn-primary btn-sm" href="#/compare-doctors?ids='+docs.map(function(d){return d.id;}).join(',')+'" '+(docs.length<2?'aria-disabled="true" style="pointer-events:none;opacity:.5;"':'')+'>Сравнить ('+docs.length+')</a>'
+    + '</div>'
+  + '</div>';
+}
+function updateCompareTray(){
+  const el = document.getElementById('compare-tray');
+  const html = renderCompareTray();
+  if(!html){ if(el) el.remove(); return; }
+  if(el){ el.outerHTML = html; } else { document.body.insertAdjacentHTML('beforeend', html); }
+  bindGlobalActions(document.getElementById('compare-tray'));
+}
+
+/* ---------------- Header / Footer ---------------- */
+const NAV_LINKS = [
+  ['#/', 'Главная'], ['#/doctors', 'Врачи'], ['#/clinics', 'Клиники'], ['#/compare', 'Сравнить цены'],
+  ['#/symptom-checker', 'Определить врача'], ['#/cabinet', 'Личный кабинет'],
+];
+function renderHeader(route){
+  const navHtml = NAV_LINKS.map(l=>'<a href="'+l[0]+'" class="'+(route===l[0]?'active':'')+'" '+(route===l[0]?'aria-current="page"':'')+'>'+l[1]+'</a>').join('');
+  const userLabel = state.user ? state.user.name.split(' ')[0] : 'Войти';
+  return '<a href="#main" style="position:absolute;left:-999px;top:0;background:var(--primary);color:#fff;padding:10px 16px;z-index:999;border-radius:0 0 8px 0;" class="skip-link" onfocus="this.style.left=0" onblur="this.style.left=\'-999px\'">Перейти к содержимому</a>'
+    + '<header class="site"><div class="header-row">'
+    + '<a href="#/" class="logo"><span class="mark">'+icon('logo',{size:17,decorative:false})+'</span>Medify</a>'
+    + '<nav class="main-nav" aria-label="Основная навигация">'+navHtml+'</nav>'
+    + '<div class="header-actions">'
+    +   '<a class="icon-btn icon-btn-danger" href="#/urgent-care" aria-label="Срочная помощь" title="Срочная помощь">'+icon('siren',{size:18})+'</a>'
+    +   '<button class="icon-btn" data-action="toggle-theme" aria-label="Переключить тему оформления">'+icon('theme',{size:18})+'</button>'
+    +   '<a class="icon-btn header-fav-btn" href="#/favorites" aria-label="Избранное">'+icon('heartOutline',{size:18})+'</a>'
+    +   '<a class="btn btn-outline btn-sm" href="#/cabinet" data-action="require-auth">'+userLabel+'</a>'
+    +   '<button class="icon-btn mobile-nav-btn" data-action="open-mobile-nav" aria-label="Открыть меню">'+icon('menu',{size:18})+'</button>'
+    + '</div>'
+  + '</div></header>';
+}
+function openMobileNav(route){
+  const overlay = document.createElement('div');
+  overlay.className = 'mobile-nav-overlay';
+  overlay.setAttribute('role','dialog');
+  overlay.setAttribute('aria-modal','true');
+  const links = NAV_LINKS.concat([['#/urgent-care','Срочная помощь'],['#/earliest','Ближайшее время приёма'],['#/favorites','Избранное'],['#/clinic-admin','Кабинет клиники']]);
+  overlay.innerHTML = '<div class="mobile-nav-panel">'
+    + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><span class="logo" style="font-size:18px;"><span class="mark">'+icon('logo',{size:15,decorative:false})+'</span>Medify</span><button class="icon-btn" id="close-mobile-nav" aria-label="Закрыть меню">'+icon('close',{size:18})+'</button></div>'
+    + links.map(function(l){ return '<a href="'+l[0]+'" class="'+(route===l[0]?'active':'')+'">'+l[1]+'</a>'; }).join('')
+  + '</div>';
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.remove(); });
+  overlay.querySelector('#close-mobile-nav').addEventListener('click', function(){ overlay.remove(); });
+  overlay.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ overlay.remove(); }); });
+}
+
+function renderFooter(){
+  return '<footer class="site"><div class="container">'
+    + '<div class="foot-grid">'
+    +   '<div><div class="logo" style="margin-bottom:10px;"><span class="mark">'+icon('logo',{size:17,decorative:false})+'</span>Medify</div><p style="color:var(--ink-faint);font-size:13.5px;max-width:32ch;">Платформа для поиска врачей и клиник, онлайн-записи на приём в Алматы.</p></div>'
+    +   '<div><h4>Пациентам</h4><a href="#/doctors">Найти врача</a><a href="#/clinics">Найти клинику</a><a href="#/compare">Сравнить цены</a><a href="#/symptom-checker">Определить врача</a><a href="#/urgent-care">Срочная помощь</a><a href="#/cabinet">Личный кабинет</a></div>'
+    +   '<div><h4>Специальности</h4><a href="#/doctors?spec=therapist">Терапевт</a><a href="#/doctors?spec=pediatric">Педиатр</a><a href="#/doctors?spec=dentist">Стоматолог</a><a href="#/doctors?spec=cardio">Кардиолог</a></div>'
+    +   '<div><h4>Контакты</h4><a href="tel:+77752506265">'+icon('phone',{size:14})+'+7 775 250 62 65</a><a href="mailto:info@medify.kz">'+icon('mail',{size:14})+'info@medify.kz</a><a href="#/clinic-admin">'+icon('building',{size:14})+'Кабинет клиники</a><a href="#/">Клиникам и врачам</a></div>'
+    + '</div>'
+    + '<div class="foot-bottom">© 2026 Medify — демонстрационная версия. Все данные о врачах и клиниках являются вымышленными. Служба поддержки платформы: <a href="tel:+77752506265" style="color:inherit;text-decoration:underline;">+7 775 250 62 65</a></div>'
+  + '</div></footer>';
+}
+
+/* ---------------- Pages ---------------- */
+function pageHome(){
+  const topDoctors = [...DOCTORS].sort((a,b)=>b.rating-a.rating).slice(0,6);
+  const popularClinics = CLINICS.slice(0,3);
+  const upcoming = [...DOCTORS].sort((a,b)=>a.id.localeCompare(b.id)).slice(0,4);
+  const allReviews = DOCTORS.slice(0,4).map(d=>Object.assign({doctorName:d.name}, reviewsFor(d.id,1)[0]));
+
+  return '<div class="hero"><div class="hero-inner">'
+    + '<div>'
+      + '<div class="eyebrow-note">'+icon('checkCircle',{size:16})+'Более 700 врачей в 5 клиниках Алматы</div>'
+      + '<h1>Найдите своего врача и запишитесь на приём за пару минут</h1>'
+      + '<p class="lead">Ищите специалистов по симптомам, специальности или клинике, сравнивайте рейтинги и отзывы, выбирайте удобное время.</p>'
+      + '<div class="search-card">'
+        + '<form data-action="hero-search" class="search-row" role="search">'
+          + '<div class="search-input-wrap"><span class="si">'+icon('search',{size:18})+'</span><label class="visually-hidden" for="hero-q" style="position:absolute;left:-9999px;">Поиск</label><input id="hero-q" type="text" name="q" placeholder="Врач, специальность или клиника"></div>'
+          + '<button class="btn btn-primary" type="submit">Искать</button>'
+        + '</form>'
+        + '<div class="search-examples">Например: <b>«ЛОР, сегодня после 18:00»</b> или <b>«стоматолог рядом»</b></div>'
+        + '<div class="hero-chips">'
+          + SPECIALTIES.slice(0,6).map(s=>'<a class="chip" href="#/doctors?spec='+s.id+'">'+icon(s.icon,{size:14})+s.name+'</a>').join('')
+        + '</div>'
+      + '</div>'
+      + '<a href="#/symptom-checker" style="display:block;"><div class="symptom-cta">'
+        + '<span class="icwrap">'+icon('alert',{size:19})+'</span>'
+        + '<div class="txt"><b>Не знаете, к какому врачу обратиться?</b>Опишите симптомы своими словами — подскажем подходящую специальность.</div>'
+        + '<span style="color:var(--accent-dark);">'+icon('arrowRight',{size:18})+'</span>'
+      + '</div></a>'
+    + '</div>'
+    + '<div class="hero-art">'+heroArtSvg()+'</div>'
+  + '</div></div>'
+
+  + '<div class="container section">'
+    + '<div class="section-head"><div><h2>Категории специалистов</h2><p>Выберите направление, чтобы увидеть подходящих врачей</p></div></div>'
+    + '<div class="spec-grid">'
+      + SPECIALTIES.map(s=>{
+          const cnt = DOCTORS.filter(d=>d.spec===s.id).length;
+          return '<a class="spec-card" href="#/doctors?spec='+s.id+'"><div class="ic">'+icon(s.icon,{size:26,stroke:1.6})+'</div><div class="nm">'+s.name+'</div><div class="ct">'+cnt+' врачей</div></a>';
+        }).join('')
+    + '</div>'
+  + '</div>'
+
+  + '<div class="container section">'
+    + '<div class="section-head"><div><h2>Врачи с высоким рейтингом</h2><p>Специалисты, которых чаще всего выбирают пациенты</p></div><a class="link-more" href="#/doctors">Все врачи '+icon('arrowRight',{size:14})+'</a></div>'
+    + '<div class="card-grid">'+topDoctors.map(d=>doctorCard(d)).join('')+'</div>'
+  + '</div>'
+
+  + '<div class="container section">'
+    + '<div class="section-head"><div><h2>Популярные клиники</h2><p>Медицинские центры с полным спектром специалистов</p></div><a class="link-more" href="#/clinics">Все клиники '+icon('arrowRight',{size:14})+'</a></div>'
+    + '<div class="card-grid">'+popularClinics.map(c=>clinicCard(c)).join('')+'</div>'
+  + '</div>'
+
+  + '<div class="strip"><div class="container">'
+    + '<div><h3>Ближайшие свободные записи сегодня</h3><p>Врачи, к которым можно попасть в ближайшее время</p></div>'
+    + '<div class="strip-list">'
+      + upcoming.map(d=>'<a href="#/doctor/'+d.id+'" class="strip-item">'+icon(specIconName(d.spec),{size:15})+d.name.split(' ')[0]+' '+d.name.split(' ')[1]+' — '+firstFreeSlotLabel(d.id)+'</a>').join('')
+    + '</div>'
+  + '</div></div>'
+
+  + '<div class="container section">'
+    + '<div class="section-head"><div><h2>Отзывы пациентов</h2><p>Что говорят пациенты о приёмах</p></div></div>'
+    + '<div class="card-grid cols-4">'+allReviews.map(r=>reviewCard(r)+'<div style="font-size:12px;color:var(--ink-faint);margin-top:-10px;padding:0 16px 14px;">о враче '+r.doctorName+'</div>').join('')+'</div>'
+  + '</div>';
+}
+
+function parseQuery(qs){
+  const out = {};
+  if(!qs) return out;
+  qs.replace(/^\?/, '').split('&').forEach(p=>{
+    if(!p) return;
+    const [k,v] = p.split('=');
+    out[decodeURIComponent(k)] = decodeURIComponent(v||'');
+  });
+  return out;
+}
+
+const doctorFilterState = { spec:'', q:'', sort:'rating', maxPrice:'', minExp:'', minRating:'', clinic:'', district:'', lang:'', format:'' };
+function pageDoctors(query){
+  if(query.spec !== undefined) doctorFilterState.spec = query.spec;
+  if(query.q !== undefined) doctorFilterState.q = query.q;
+
+  let list = DOCTORS.slice();
+  const f = doctorFilterState;
+  if(f.spec) list = list.filter(d=>d.spec===f.spec);
+  if(f.q){
+    const q = f.q.toLowerCase();
+    list = list.filter(d=> d.name.toLowerCase().indexOf(q)!==-1 || specName(d.spec).toLowerCase().indexOf(q)!==-1 || clinicById(d.clinic).name.toLowerCase().indexOf(q)!==-1);
+  }
+  if(f.clinic) list = list.filter(d=>d.clinic===f.clinic);
+  if(f.district) list = list.filter(d=>clinicById(d.clinic).district===f.district);
+  if(f.maxPrice) list = list.filter(d=>d.price<=Number(f.maxPrice));
+  if(f.minExp) list = list.filter(d=>d.exp>=Number(f.minExp));
+  if(f.minRating) list = list.filter(d=>d.rating>=Number(f.minRating));
+  if(f.lang) list = list.filter(d=>d.langs.indexOf(f.lang)!==-1);
+  if(f.format) list = list.filter(d=>d.formats.indexOf(f.format)!==-1);
+
+  if(f.sort==='rating') list.sort((a,b)=>b.rating-a.rating);
+  else if(f.sort==='price_asc') list.sort((a,b)=>a.price-b.price);
+  else if(f.sort==='price_desc') list.sort((a,b)=>b.price-a.price);
+  else if(f.sort==='exp') list.sort((a,b)=>b.exp-a.exp);
+
+  return '<div class="page-head"><div class="container">'
+    + '<div class="breadcrumb"><a href="#/">Главная</a> / Поиск врачей</div>'
+    + '<h1 style="font-size:25px;">Поиск врачей'+(f.spec ? ' — '+specName(f.spec) : '')+'</h1>'
+  + '</div></div>'
+  + '<div class="container">'
+    + '<div class="filters-bar" id="doc-filters">'
+      + '<div class="search-input-wrap" style="min-width:200px;flex:0 0 auto;"><span class="si" style="left:11px;">'+icon('search',{size:16})+'</span><input type="text" id="f-q" placeholder="Имя, специальность, клиника" value="'+(f.q||'')+'" style="padding:10px 12px 10px 34px;border:1px solid var(--line);border-radius:var(--radius-s);font-size:13.5px;min-width:200px;background:var(--surface);color:var(--ink);font-family:inherit;min-height:44px;"></div>'
+      + '<select id="f-spec" aria-label="Специальность"><option value="">Все специальности</option>'+SPECIALTIES.map(s=>'<option value="'+s.id+'" '+(f.spec===s.id?'selected':'')+'>'+s.name+'</option>').join('')+'</select>'
+      + '<select id="f-clinic" aria-label="Клиника"><option value="">Все клиники</option>'+CLINICS.map(c=>'<option value="'+c.id+'" '+(f.clinic===c.id?'selected':'')+'>'+c.name+'</option>').join('')+'</select>'
+      + '<select id="f-district" aria-label="Район"><option value="">Все районы</option>'+Array.from(new Set(CLINICS.map(c=>c.district))).map(dd=>'<option value="'+dd+'" '+(f.district===dd?'selected':'')+'>'+dd+' р-н</option>').join('')+'</select>'
+      + '<select id="f-price" aria-label="Цена"><option value="">Любая цена</option><option value="9000" '+(f.maxPrice==='9000'?'selected':'')+'>до 9 000 ₸</option><option value="12000" '+(f.maxPrice==='12000'?'selected':'')+'>до 12 000 ₸</option><option value="18000" '+(f.maxPrice==='18000'?'selected':'')+'>до 18 000 ₸</option></select>'
+      + '<select id="f-exp" aria-label="Опыт"><option value="">Любой опыт</option><option value="5" '+(f.minExp==='5'?'selected':'')+'>от 5 лет</option><option value="10" '+(f.minExp==='10'?'selected':'')+'>от 10 лет</option><option value="15" '+(f.minExp==='15'?'selected':'')+'>от 15 лет</option></select>'
+      + '<select id="f-rating" aria-label="Рейтинг"><option value="">Любой рейтинг</option><option value="4.5" '+(f.minRating==='4.5'?'selected':'')+'>от 4.5</option><option value="4.8" '+(f.minRating==='4.8'?'selected':'')+'>от 4.8</option></select>'
+      + '<select id="f-lang" aria-label="Язык"><option value="">Любой язык</option><option value="рус" '+(f.lang==='рус'?'selected':'')+'>Русский</option><option value="каз" '+(f.lang==='каз'?'selected':'')+'>Казахский</option><option value="англ" '+(f.lang==='англ'?'selected':'')+'>Английский</option></select>'
+      + '<button class="filter-toggle '+(f.format==='Онлайн'?'active':'')+'" id="f-online" aria-pressed="'+(f.format==='Онлайн')+'">'+icon('phone',{size:14})+'Приём онлайн</button>'
+      + '<a class="filter-toggle" href="#/earliest'+(f.spec?'?spec='+f.spec:'')+'">'+icon('clock',{size:14})+'Найти ближайшее время</a>'
+      + '<select id="f-sort" aria-label="Сортировка"><option value="rating" '+(f.sort==='rating'?'selected':'')+'>По рейтингу</option><option value="price_asc" '+(f.sort==='price_asc'?'selected':'')+'>Сначала дешевле</option><option value="price_desc" '+(f.sort==='price_desc'?'selected':'')+'>Сначала дороже</option><option value="exp" '+(f.sort==='exp'?'selected':'')+'>По опыту</option></select>'
+      + '<span class="results-count" aria-live="polite">'+list.length+' врачей найдено</span>'
+    + '</div>'
+    + (list.length ? '<div class="list-grid">'+list.map(d=>doctorCard(d)).join('')+'</div>'
+       : '<div class="empty-state">'+icon('search',{size:40,cls:'ic',decorative:false})+'<h3>Ничего не найдено</h3><p>Попробуйте изменить параметры фильтра</p></div>')
+  + '</div><div style="height:50px;"></div>';
+}
+
+const clinicFilterState = {district:'', spec:'', maxPrice:'', openNow:false, todaySlot:false};
+function pinHtml(c){
+  const dist = clinicDistanceKm(c);
+  const open = isOpenNow(c);
+  return '<a href="#/clinic/'+c.id+'" style="position:absolute;left:'+c.x+'%;top:'+c.y+'%;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center;text-decoration:none;" title="'+c.name+' — ≈'+dist+' км">'
+    + '<span style="width:30px;height:30px;border-radius:50% 50% 50% 0;background:'+c.color+';transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.25);"><span style="transform:rotate(45deg);color:#fff;">'+icon('building',{size:14,decorative:false})+'</span></span>'
+    + '<span style="margin-top:4px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:2px 8px;font-size:10.5px;font-weight:700;color:var(--ink);white-space:nowrap;box-shadow:var(--shadow-card);">≈'+dist+' км'+(open?' · открыто':'')+'</span>'
+  + '</a>';
+}
+function renderCityMap(clinics){
+  return '<div class="sidebar-card" style="position:static;padding:0;overflow:hidden;margin-bottom:22px;">'
+    + '<div style="position:relative;width:100%;aspect-ratio:16/8;background:'
+      + 'repeating-linear-gradient(0deg, transparent, transparent 11%, var(--line-soft) 11%, var(--line-soft) 11.3%), '
+      + 'repeating-linear-gradient(90deg, transparent, transparent 11%, var(--line-soft) 11%, var(--line-soft) 11.3%), '
+      + 'linear-gradient(135deg, var(--primary-tint), var(--bg));">'
+      + '<div style="position:absolute;left:50%;top:50%;width:9px;height:9px;border-radius:50%;background:var(--accent);transform:translate(-50%,-50%);box-shadow:0 0 0 5px var(--accent-tint);" title="Вы здесь"></div>'
+      + clinics.map(function(c){ return pinHtml(c); }).join('')
+    + '</div>'
+    + '<div style="padding:10px 16px;font-size:12px;color:var(--ink-faint);display:flex;align-items:center;gap:6px;">'+icon('navigation',{size:13})+'Схематичная карта расположения — точка в центре обозначает вас.</div>'
+  + '</div>';
+}
+function pageClinics(query){
+  if(query && query.district!==undefined) clinicFilterState.district = query.district;
+  const f = clinicFilterState;
+  let list = CLINICS.slice();
+  if(f.district) list = list.filter(function(c){ return c.district===f.district; });
+  if(f.spec) list = list.filter(function(c){ return doctorsByClinic(c.id).some(function(d){ return d.spec===f.spec; }); });
+  if(f.maxPrice) list = list.filter(function(c){ return Object.values(c.priceList).some(function(p){ return p!=null && p<=Number(f.maxPrice); }); });
+  if(f.openNow) list = list.filter(function(c){ return isOpenNow(c); });
+  if(f.todaySlot) list = list.filter(function(c){ return clinicHasSlotToday(c); });
+  const usedDistricts = Array.from(new Set(CLINICS.map(function(c){ return c.district; })));
+
+  return '<div class="page-head"><div class="container">'
+    + '<div class="breadcrumb"><a href="#/">Главная</a> / Клиники</div>'
+    + '<h1 style="font-size:25px;">Клиники Алматы</h1>'
+  + '</div></div>'
+  + '<div class="container" style="padding:24px 20px 60px;">'
+    + renderCityMap(CLINICS)
+    + '<div class="filters-bar" id="clinic-filters">'
+      + '<select id="cf-district" aria-label="Район"><option value="">Все районы</option>'+usedDistricts.map(function(dd){ return '<option value="'+dd+'" '+(f.district===dd?'selected':'')+'>'+dd+' р-н</option>'; }).join('')+'</select>'
+      + '<select id="cf-spec" aria-label="Специалист"><option value="">Любой специалист</option>'+SPECIALTIES.map(function(s){ return '<option value="'+s.id+'" '+(f.spec===s.id?'selected':'')+'>'+s.name+'</option>'; }).join('')+'</select>'
+      + '<select id="cf-price" aria-label="Цена"><option value="">Любая цена</option><option value="8000" '+(f.maxPrice==='8000'?'selected':'')+'>приём до 8 000 ₸</option><option value="12000" '+(f.maxPrice==='12000'?'selected':'')+'>приём до 12 000 ₸</option></select>'
+      + '<button class="filter-toggle '+(f.openNow?'active':'')+'" id="cf-open" aria-pressed="'+f.openNow+'">'+icon('clock',{size:14})+'Открыто сейчас</button>'
+      + '<button class="filter-toggle '+(f.todaySlot?'active':'')+'" id="cf-today" aria-pressed="'+f.todaySlot+'">'+icon('calendar',{size:14})+'Есть запись сегодня</button>'
+      + '<span class="results-count" aria-live="polite">'+list.length+' клиник найдено</span>'
+    + '</div>'
+    + (list.length ? '<div class="list-grid">'+list.map(function(c){ return clinicCard(c); }).join('')+'</div>'
+       : '<div class="empty-state">'+icon('sliders',{size:36,cls:'ic',decorative:false})+'<h3>Клиники не найдены</h3><p>Попробуйте изменить параметры фильтра</p></div>')
+  + '</div>';
+}
+
+function pageCompare(query){
+  const service = (query && query.service && SERVICE_CATALOG.indexOf(query.service)!==-1) ? query.service : SERVICE_CATALOG[0];
+  const rows = CLINICS.map(function(c){ return {c:c, price:c.priceList[service]}; })
+    .filter(function(r){ return r.price!=null; })
+    .sort(function(a,b){ return a.price-b.price; });
+  const maxPrice = rows.length ? Math.max.apply(null, rows.map(function(r){ return r.price; })) : 1;
+  return '<div class="page-head"><div class="container">'
+    + '<div class="breadcrumb"><a href="#/">Главная</a> / Сравнить цены</div>'
+    + '<h1 style="font-size:25px;">Сравнить цены на услуги</h1>'
+    + '<p style="color:var(--ink-soft);font-size:14px;margin-top:6px;">Выберите услугу, чтобы сравнить стоимость приёма в разных клиниках Алматы.</p>'
+  + '</div></div>'
+  + '<div class="container" style="padding:24px 20px 60px;">'
+    + '<div class="form-row" style="max-width:420px;margin-bottom:22px;"><label for="compare-service">Услуга</label><select id="compare-service">'+SERVICE_CATALOG.map(function(s){ return '<option value="'+s+'" '+(s===service?'selected':'')+'>'+s+'</option>'; }).join('')+'</select></div>'
+    + (rows.length ? '<div style="display:flex;flex-direction:column;gap:10px;">'
+        + rows.map(function(r,i){
+            const pct = Math.round(r.price/maxPrice*100);
+            const docs = doctorsByClinic(r.c.id);
+            const avgRating = docs.length ? (docs.reduce(function(s,d){return s+d.rating;},0)/docs.length) : 4.7;
+            return '<div class="clinic-card" style="flex-direction:row;align-items:center;gap:16px;padding:14px 16px;">'
+              + '<div style="width:44px;height:44px;border-radius:50%;background:'+r.c.color+';color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;">'+icon('building',{size:20,decorative:false})+'</div>'
+              + '<div style="flex:1;min-width:0;">'
+                + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span class="clinic-name">'+r.c.name+'</span>'+(i===0?'<span class="tag" style="background:var(--ok-tint);color:var(--ok);">Самая низкая цена</span>':'')+'</div>'
+                + '<div class="rating-row" style="margin-top:4px;">'+starsSvg(avgRating)+'<span class="rating-num">'+avgRating.toFixed(1)+'</span></div>'
+                + '<div class="rb-bar" style="margin-top:8px;"><div class="rb-fill" style="width:'+pct+'%;background:'+(i===0?'var(--ok)':'var(--primary)')+';"></div></div>'
+              + '</div>'
+              + '<div style="text-align:right;flex-shrink:0;"><div class="price" style="font-size:18px;">'+r.price.toLocaleString('ru-RU')+' ₸</div><a class="link-more" href="#/clinic/'+r.c.id+'">Подробнее '+icon('arrowRight',{size:12})+'</a></div>'
+            + '</div>';
+          }).join('')
+      + '</div>'
+      : '<div class="empty-state">'+icon('sliders',{size:36,cls:'ic',decorative:false})+'<h3>Эта услуга пока не найдена</h3><p>Ни одна из клиник не указала цену на выбранную услугу.</p></div>')
+  + '</div>';
+}
+function pageCompareDoctors(query){
+  const ids = ((query && query.ids) || '').split(',').filter(Boolean);
+  const docs = ids.map(doctorById).filter(Boolean);
+  return '<div class="page-head"><div class="container">'
+    + '<div class="breadcrumb"><a href="#/">Главная</a> / Сравнить врачей</div>'
+    + '<h1 style="font-size:25px;">Сравнение врачей</h1>'
+    + '<p style="color:var(--ink-soft);font-size:14px;margin-top:6px;">Сравните цену приёма, опыт, рейтинг и ближайшую запись у выбранных врачей.</p>'
+  + '</div></div>'
+  + '<div class="container" style="padding:24px 20px 60px;">'
+    + (docs.length < 2
+      ? '<div class="empty-state">'+icon('scale',{size:38,cls:'ic',decorative:false})+'<h3>Выберите минимум двух врачей</h3><p>Отметьте врачей значком сравнения на странице поиска, затем нажмите «Сравнить».</p><a class="btn btn-primary" style="margin-top:14px;" href="#/doctors">К поиску врачей</a></div>'
+      : compareDoctorsTable(docs))
+  + '</div>';
+}
+function compareDoctorsTable(docs){
+  function row(label, fn){
+    return '<tr><th>'+label+'</th>'+docs.map(function(d){ return '<td>'+fn(d)+'</td>'; }).join('')+'</tr>';
+  }
+  return '<div style="overflow-x:auto;">'
+  + '<table class="compare-table">'
+    + '<tr><th></th>'+docs.map(function(d){
+        return '<td style="min-width:190px;"><div style="display:flex;flex-direction:column;align-items:flex-start;gap:8px;">'
+          + initialsAvatar(d.initials,d.color,52)
+          + '<div><div class="doc-name" style="font-size:14.5px;">'+d.name+'</div><div class="doc-spec">'+specName(d.spec)+'</div></div>'
+          + '<button class="btn btn-ghost btn-sm" type="button" data-action="toggle-compare-doctor" data-id="'+d.id+'" style="padding:4px 0;">'+icon('close',{size:13})+'Убрать</button>'
+        + '</div></td>';
+      }).join('')+'</tr>'
+    + row('Цена приёма', function(d){ return '<b>'+d.price.toLocaleString('ru-RU')+' ₸</b>'; })
+    + row('Опыт', function(d){ return d.exp+' лет'; })
+    + row('Рейтинг', function(d){ return starsSvg(d.rating)+' '+d.rating.toFixed(1)+' <span style="color:var(--ink-faint);">('+d.reviews+')</span>'; })
+    + row('Клиника', function(d){ const c = clinicById(d.clinic); return c.name; })
+    + row('Район', function(d){ const c = clinicById(d.clinic); return c.district+' р-н'; })
+    + row('Языки приёма', function(d){ return d.langs.join(', '); })
+    + row('Формат приёма', function(d){ return d.formats.join(', '); })
+    + row('Ближайшая запись', function(d){ return '<span style="color:var(--ok);font-weight:700;">'+firstFreeSlotLabel(d.id)+'</span>'; })
+    + row('', function(d){ return '<a class="btn btn-primary btn-sm" href="#/booking/'+d.id+'">Записаться</a>'; })
+  + '</table>'
+  + '</div>';
+}
+
+function pageEarliest(query){
+  const specId = (query && query.spec && SPECIALTIES.some(function(s){ return s.id===query.spec; })) ? query.spec : '';
+  const rows = specId ? earliestForSpec(specId).slice(0,5) : [];
+  return '<div class="page-head"><div class="container">'
+    + '<div class="breadcrumb"><a href="#/">Главная</a> / Ближайшее время приёма</div>'
+    + '<h1 style="font-size:25px;">Найти ближайшее время приёма</h1>'
+    + '<p style="color:var(--ink-soft);font-size:14px;margin-top:6px;">Выберите специальность — покажем врачей с самой ранней свободной записью.</p>'
+  + '</div></div>'
+  + '<div class="container" style="padding:24px 20px 60px;">'
+    + '<div class="form-row" style="max-width:420px;margin-bottom:22px;"><label for="earliest-spec">Специальность</label><select id="earliest-spec"><option value="">Выберите специальность</option>'+SPECIALTIES.map(function(s){ return '<option value="'+s.id+'" '+(s.id===specId?'selected':'')+'>'+s.name+'</option>'; }).join('')+'</select></div>'
+    + (!specId ? '<div class="empty-state">'+icon('clock',{size:38,cls:'ic',decorative:false})+'<h3>Выберите специальность</h3><p>Покажем 5 врачей с самой ранней доступной записью.</p></div>'
+       : (rows.length ? '<div style="display:flex;flex-direction:column;gap:10px;">'
+          + rows.map(function(r,i){
+              const c = clinicById(r.doctor.clinic);
+              const isToday = dateKey(r.slot.date)===dateKey(new Date());
+              return '<div class="clinic-card" style="flex-direction:row;align-items:center;gap:16px;padding:14px 16px;">'
+                + initialsAvatar(r.doctor.initials, r.doctor.color, 48)
+                + '<div style="flex:1;min-width:0;">'
+                  + '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;"><span class="doc-name">'+r.doctor.name+'</span>'+(i===0?'<span class="tag" style="background:var(--ok-tint);color:var(--ok);">Самое раннее время</span>':'')+'</div>'
+                  + '<div class="doc-spec">'+specName(r.doctor.spec)+' · '+c.name+'</div>'
+                  + '<div class="rating-row" style="margin-top:4px;">'+starsSvg(r.doctor.rating)+'<span class="rating-num">'+r.doctor.rating.toFixed(1)+'</span></div>'
+                + '</div>'
+                + '<div style="text-align:right;flex-shrink:0;">'
+                  + '<div class="slot-next" style="justify-content:flex-end;">'+icon('clock',{size:13})+(isToday?'Сегодня, ':formatDateHuman(r.slot.date)+', ')+r.slot.time+'</div>'
+                  + '<div class="price" style="font-size:15px;margin-top:2px;">'+r.doctor.price.toLocaleString('ru-RU')+' ₸</div>'
+                  + '<a class="btn btn-primary btn-sm" style="margin-top:8px;" href="#/booking/'+r.doctor.id+'">Записаться</a>'
+                + '</div>'
+              + '</div>';
+            }).join('')
+        + '</div>'
+        : '<div class="empty-state">'+icon('sliders',{size:36,cls:'ic',decorative:false})+'<h3>Свободных записей не найдено</h3><p>Попробуйте другую специальность.</p></div>'))
+  + '</div>';
+}
+
+function pageDoctor(id){
+  const d = doctorById(id);
+  if(!d) return '<div class="empty-state"><h3>Врач не найден</h3><a class="btn btn-outline" href="#/doctors">К списку врачей</a></div>';
+  const clinic = clinicById(d.clinic);
+  const fav = isFav('doctor', d.id);
+
+  return '<div class="page-head"><div class="container">'
+    + '<div class="breadcrumb"><a href="#/">Главная</a> / <a href="#/doctors">Врачи</a> / '+d.name+'</div>'
+  + '</div></div>'
+  + '<div class="container">'
+    + '<div class="doc-hero">'
+      + '<div>'+initialsAvatarBig(d)+'</div>'
+      + '<div class="doc-hero-info">'
+        + '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">'
+        +   '<div><h1>'+d.name+'</h1><div class="doc-spec" style="font-size:15px;margin-top:4px;">'+icon(specIconName(d.spec),{size:17})+specName(d.spec)+' · '+clinic.name+'</div></div>'
+        +   '<button class="icon-btn" data-action="toggle-fav-doctor" data-id="'+d.id+'" aria-pressed="'+fav+'" aria-label="'+(fav?'Убрать из избранного':'Добавить в избранное')+'" style="'+(fav?'color:var(--danger);border-color:var(--danger);':'')+'">'+icon(fav?'heartFilled':'heartOutline',{size:18})+'</button>'
+        + '</div>'
+        + '<div class="rating-row" style="margin-top:12px;">'+starsSvg(d.rating)+'<span class="rating-num">'+d.rating.toFixed(1)+'</span><span class="rating-count">('+d.reviews+' отзывов)</span></div>'
+        + '<div class="pill-row"><span class="pill">'+icon('user',{size:13})+'Стаж '+d.exp+' лет</span><span class="pill">'+d.price.toLocaleString('ru-RU')+' ₸ за приём</span>'+d.formats.map(f=>'<span class="pill">'+f+'</span>').join('')+'<span class="pill">'+d.langs.join(', ')+'</span></div>'
+        + '<div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">'
+        +   '<a class="btn btn-primary" href="#/booking/'+d.id+'">Записаться на приём</a>'
+        +   '<a class="btn btn-outline" href="tel:'+clinic.phone.replace(/[^+\d]/g,'')+'">'+icon('phone',{size:16})+'Позвонить в клинику</a>'
+        + '</div>'
+      + '</div>'
+    + '</div>'
+
+    + '<div class="tab-row" id="doc-tabs" role="tablist">'
+      + '<button class="tab-btn active" role="tab" aria-selected="true" data-tab="about">О враче</button>'
+      + '<button class="tab-btn" role="tab" aria-selected="false" data-tab="schedule">Расписание</button>'
+      + '<button class="tab-btn" role="tab" aria-selected="false" data-tab="reviews">Отзывы ('+d.reviews+')</button>'
+      + '<button class="tab-btn" role="tab" aria-selected="false" data-tab="clinic">Клиника</button>'
+    + '</div>'
+
+    + '<div id="doc-tab-content">'+docTabAbout(d, clinic)+'</div>'
+  + '</div><div style="height:40px;"></div>';
+}
+function initialsAvatarBig(d){
+  return '<div class="doc-hero-avatar" style="background:'+d.color+';">'+d.initials+'</div>';
+}
+function docTabAbout(d, clinic){
+  return '<div class="info-grid">'
+    + '<div>'
+      + '<div class="info-block"><h3>О враче</h3><p>'+d.about+'</p></div>'
+      + '<div class="info-block"><h3>Образование и квалификация</h3><div class="kv-list">'
+        + '<div class="kv-row"><span class="k">Образование</span><span class="v">'+d.edu+'</span></div>'
+        + '<div class="kv-row"><span class="k">Специализация</span><span class="v">'+specName(d.spec)+'</span></div>'
+        + '<div class="kv-row"><span class="k">Стаж работы</span><span class="v">'+d.exp+' лет</span></div>'
+        + '<div class="kv-row"><span class="k">Языки приёма</span><span class="v">'+d.langs.join(', ')+'</span></div>'
+      + '</div></div>'
+    + '</div>'
+    + '<div><div class="sidebar-card">'
+      + '<h4>Контакты клиники</h4>'
+      + '<div class="kv-list">'
+        + '<div class="kv-row">'+icon('building',{size:16,cls:'ic'})+'<span class="v">'+clinic.name+'</span></div>'
+        + '<div class="kv-row">'+icon('mappin',{size:16,cls:'ic'})+'<span class="v">'+clinic.addr+'</span></div>'
+        + '<div class="kv-row">'+icon('phone',{size:16,cls:'ic'})+'<span class="v">'+tel(clinic.phone)+'</span></div>'
+        + '<div class="kv-row">'+icon('clock',{size:16,cls:'ic'})+'<span class="v">'+clinic.workDays+', '+clinic.workHours+'</span></div>'
+      + '</div>'
+      + '<a class="btn btn-primary btn-block" style="margin-top:16px;" href="#/booking/'+d.id+'">Записаться на приём</a>'
+    + '</div></div>'
+  + '</div>';
+}
+function docTabSchedule(d){
+  const dates = nextNDates(7);
+  const selDate = pageDoctor._selDate || dateKey(dates[0]);
+  const selDateObj = dates.find(x=>dateKey(x)===selDate) || dates[0];
+  const slots = slotsForDoctorDate(d.id, selDateObj);
+  return '<div class="info-grid">'
+    + '<div>'
+      + '<div class="info-block">'
+        + '<h3>Выберите дату и время</h3>'
+        + '<div class="day-tabs" id="day-tabs">'
+          + dates.map(dt=>{
+              const key = dateKey(dt);
+              return '<button class="day-tab '+(key===selDate?'active':'')+'" data-date="'+key+'" aria-pressed="'+(key===selDate)+'"><div class="dow">'+WEEKDAYS[dt.getDay()]+'</div><div class="dnum">'+dt.getDate()+'</div></button>';
+            }).join('')
+        + '</div>'
+        + '<div class="slot-grid" id="slot-grid">'
+          + slots.map(s=>'<button class="slot-btn '+(s.busy?'busy':'')+'" '+(s.busy?'disabled':'')+' data-slot="'+s.time+'">'+s.time+'</button>').join('')
+        + '</div>'
+      + '</div>'
+    + '</div>'
+    + '<div><div class="sidebar-card"><h4>Приём</h4><p style="font-size:13.5px;color:var(--ink-soft);">Выберите свободное время в календаре слева, затем нажмите «Записаться», чтобы перейти к оформлению.</p>'
+      + '<a class="btn btn-primary btn-block" style="margin-top:10px;" href="#/booking/'+d.id+'">Записаться на приём</a>'
+      + waitlistBlock(d)
+      + '</div></div>'
+  + '</div>';
+}
+function waitlistBlock(d){
+  const onList = isOnWaitlist(d.id);
+  return '<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft);">'
+    + '<p style="font-size:12.5px;color:var(--ink-faint);margin-bottom:8px;">Нет удобного времени в ближайшие дни? Мы сообщим, если освободится более раннее время.</p>'
+    + (onList
+      ? '<div class="tag" style="color:var(--ok);background:var(--ok-tint);display:inline-flex;align-items:center;gap:6px;">'+icon('bell',{size:13})+'Вы в листе ожидания</div>'
+      : '<button class="btn btn-outline btn-block" type="button" data-action="join-waitlist" data-doctor="'+d.id+'">'+icon('bell',{size:15})+'Встать в лист ожидания</button>')
+  + '</div>';
+}
+function docTabReviews(d){
+  const revs = reviewsFor(d.id, Math.min(6, Math.max(3, Math.round(d.reviews/25))));
+  function avg(arr){ return arr.reduce((s,x)=>s+x,0)/arr.length; }
+  const b = {treatment:avg(revs.map(r=>r.treatment)), attitude:avg(revs.map(r=>r.attitude)), wait:avg(revs.map(r=>r.wait)), expectation:avg(revs.map(r=>r.expectation)), explanation:avg(revs.map(r=>r.explanation)), priceValue:avg(revs.map(r=>r.priceValue)), recommend:avg(revs.map(r=>r.recommend))};
+  return '<div class="info-grid">'
+    + '<div><div class="info-block"><h3>Отзывы пациентов</h3>'
+      + revs.map(r=>reviewCard(r)).join('<div style="height:10px;"></div>')
+    + '</div></div>'
+    + '<div><div class="sidebar-card">'
+      + '<h4>'+d.rating.toFixed(1)+' — '+d.reviews+' отзывов</h4>'
+      + '<div class="rating-breakdown" style="margin-top:14px;">'
+        + rbRow('Отношение врача', b.attitude)
+        + rbRow('Время ожидания', b.wait)
+        + rbRow('Объяснение диагноза', b.explanation)
+        + rbRow('Качество лечения', b.treatment)
+        + rbRow('Соответствие цены', b.priceValue)
+        + rbRow('Готовы рекомендовать', b.recommend)
+      + '</div>'
+      + '<button class="btn btn-outline btn-block" style="margin-top:16px;" data-action="open-review-modal" data-doctor="'+d.id+'">Оставить отзыв</button>'
+    + '</div></div>'
+  + '</div>';
+  function rbRow(label, val){
+    return '<div class="rb-row"><span class="rb-label">'+label+'</span><div class="rb-bar"><div class="rb-fill" style="width:'+(val/5*100)+'%;"></div></div><span class="rb-val">'+val.toFixed(1)+'</span></div>';
+  }
+}
+function docTabClinic(d){
+  const c = clinicById(d.clinic);
+  const colleagues = doctorsByClinic(c.id).filter(x=>x.id!==d.id);
+  return '<div class="info-block"><h3>'+c.name+'</h3><p>'+c.addr+'</p>'
+    + '<div class="kv-list" style="margin-top:10px;">'
+      + '<div class="kv-row">'+icon('phone',{size:16,cls:'ic'})+'<span class="v">'+tel(c.phone)+'</span></div>'
+      + '<div class="kv-row">'+icon('clock',{size:16,cls:'ic'})+'<span class="v">'+c.workDays+', '+c.workHours+'</span></div>'
+    + '</div>'
+    + '<a class="btn btn-outline btn-sm" style="margin-top:14px;" href="#/clinic/'+c.id+'">Открыть страницу клиники</a>'
+  + '</div>'
+  + (colleagues.length ? '<div class="info-block"><h3>Другие врачи этой клиники</h3><div class="card-grid">'+colleagues.slice(0,3).map(x=>doctorCard(x)).join('')+'</div></div>' : '');
+}
+
+function pageClinic(id){
+  const c = clinicById(id);
+  if(!c) return '<div class="empty-state"><h3>Клиника не найдена</h3><a class="btn btn-outline" href="#/clinics">К списку клиник</a></div>';
+  const docs = doctorsByClinic(c.id);
+  const avgRating = docs.length ? (docs.reduce((s,d)=>s+d.rating,0)/docs.length) : 4.7;
+  const totalReviews = docs.reduce((s,d)=>s+d.reviews,0);
+  const fav = isFav('clinic', c.id);
+  const revs = reviewsFor(c.id, 3);
+  return '<div class="page-head"><div class="container">'
+    + '<div class="breadcrumb"><a href="#/">Главная</a> / <a href="#/clinics">Клиники</a> / '+c.name+'</div>'
+  + '</div></div>'
+  + '<div style="height:150px;background:'+c.color+';display:flex;align-items:center;justify-content:center;color:#fff;">'+icon('building',{size:46,stroke:1.4})+'</div>'
+  + '<div class="container">'
+    + '<div style="display:flex;justify-content:space-between;align-items:flex-start;padding:24px 0 6px;gap:12px;">'
+      + '<div><h1 style="font-size:25px;">'+c.name+'</h1>'
+      + '<div class="rating-row" style="margin-top:8px;">'+starsSvg(avgRating)+'<span class="rating-num">'+avgRating.toFixed(1)+'</span><span class="rating-count">('+totalReviews+' отзывов)</span></div></div>'
+      + '<button class="icon-btn" data-action="toggle-fav-clinic" data-id="'+c.id+'" aria-pressed="'+fav+'" aria-label="'+(fav?'Убрать из избранного':'Добавить в избранное')+'" style="'+(fav?'color:var(--danger);border-color:var(--danger);':'')+'">'+icon(fav?'heartFilled':'heartOutline',{size:18})+'</button>'
+    + '</div>'
+
+    + '<div class="info-grid" style="padding-top:14px;">'
+      + '<div>'
+        + '<div class="info-block"><h3>Медицинские услуги и цены</h3><div class="kv-list">'
+          + c.services.map(s=>'<div class="kv-row" style="justify-content:space-between;"><span class="v">'+s.name+'</span><span class="v" style="font-weight:700;">'+s.price.toLocaleString('ru-RU')+' ₸</span></div>').join('')
+        + '</div></div>'
+        + '<div class="info-block"><h3>Врачи клиники</h3><div class="card-grid">'+docs.map(d=>doctorCard(d)).join('')+'</div></div>'
+        + '<div class="info-block"><h3>Отзывы о клинике</h3>'+revs.map(r=>reviewCard(r)).join('<div style="height:10px;"></div>')+'</div>'
+      + '</div>'
+      + '<div><div class="sidebar-card">'
+        + '<h4>Контакты</h4>'
+        + '<div class="kv-list">'
+          + '<div class="kv-row">'+icon('mappin',{size:16,cls:'ic'})+'<span class="v">'+c.addr+'</span></div>'
+          + '<div class="kv-row">'+icon('phone',{size:16,cls:'ic'})+'<span class="v">'+tel(c.phone)+'</span></div>'
+          + '<div class="kv-row">'+icon('building',{size:16,cls:'ic'})+'<span class="v">'+c.site+'</span></div>'
+          + '<div class="kv-row">'+icon('clock',{size:16,cls:'ic'})+'<span class="v">'+c.workDays+', '+c.workHours+'</span></div>'
+        + '</div>'
+        + '<a class="btn btn-outline btn-block" style="margin-top:16px;" href="tel:'+c.phone.replace(/[^+\d]/g,'')+'">'+icon('phone',{size:16})+'Позвонить в клинику</a>'
+      + '</div></div>'
+    + '</div>'
+  + '</div><div style="height:30px;"></div>';
+}
+
+const symptomWizard = {step:1, text:'', answers:{duration:null, fever:null, severity:null}, redFlag:false};
+function resetSymptomWizard(){
+  symptomWizard.step=1; symptomWizard.text=''; symptomWizard.redFlag=false;
+  symptomWizard.answers={duration:null, fever:null, severity:null};
+}
+function pageSymptomChecker(){
+  resetSymptomWizard();
+  return '<div class="page-head"><div class="container">'
+    + '<div class="breadcrumb"><a href="#/">Главная</a> / AI Symptom Checker</div>'
+    + '<h1 style="font-size:25px;">Не знаете, к какому врачу обратиться?</h1>'
+    + '<p style="color:var(--ink-soft);font-size:14px;margin-top:6px;">Опишите симптомы, ответьте на пару уточняющих вопросов — получите направление, куда обратиться.</p>'
+  + '</div></div>'
+  + '<div class="symptom-page"><div class="symptom-box" id="symptom-wizard">'+renderSymptomStep()+'</div></div>';
+}
+function symptomStepper(){
+  const labels=['Симптомы','Уточнение','Рекомендация'];
+  return '<div class="stepper" style="margin-bottom:22px;">'+labels.map((l,i)=>{
+    const n=i+1; const cls=n<symptomWizard.step?'done':(n===symptomWizard.step?'active':'');
+    return '<div class="step '+cls+'"><div class="snum">Шаг '+n+'</div><div class="slabel">'+l+'</div></div>';
+  }).join('')+'</div>';
+}
+function choiceGroup(key,label,options,selected){
+  return '<div class="form-row"><label style="margin-bottom:9px;">'+label+'</label><div style="display:flex;gap:8px;flex-wrap:wrap;">'
+    + options.map(function(o){ return '<button type="button" class="filter-toggle symptom-choice '+(selected===o[0]?'active':'')+'" aria-pressed="'+(selected===o[0])+'" data-qkey="'+key+'" data-qval="'+o[0]+'">'+o[1]+'</button>'; }).join('')
+  + '</div></div>';
+}
+function urgentRedFlagBlock(){
+  return '<div class="disclaimer" style="background:var(--danger-tint);border-color:var(--danger);align-items:flex-start;">'
+    + icon('siren',{size:22,cls:'ic',decorative:false})
+    + '<div><b style="display:block;color:var(--danger);font-family:var(--font-head);margin-bottom:4px;">Похоже на состояние, которое требует срочной помощи</b>'
+    + 'Мы не ставим диагноз по описанию — но такие признаки требуют немедленной оценки врача. Пожалуйста, позвоните <b>103</b> (скорая помощь) или обратитесь в ближайшее приёмное отделение прямо сейчас.</div>'
+  + '</div>'
+  + '<div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">'
+    + '<a class="btn btn-accent" href="tel:103">'+icon('phone',{size:16})+'Позвонить 103</a>'
+    + '<a class="btn btn-outline" href="#/urgent-care">'+icon('siren',{size:16})+'Открыть «Срочная помощь»</a>'
+    + '<button class="btn btn-ghost" data-action="symptom-back">Это не экстренный случай, вернуться назад</button>'
+  + '</div>';
+}
+function renderSymptomStep(){
+  if(symptomWizard.step===1){
+    return symptomStepper()
+      + '<label for="symptom-input" style="display:block;font-size:13.5px;font-weight:700;color:var(--ink-soft);margin-bottom:8px;">Опишите, что вас беспокоит, своими словами</label>'
+      + '<textarea id="symptom-input" placeholder="Например: у меня болит горло уже три дня, сложно глотать и иногда поднимается температура">'+symptomWizard.text+'</textarea>'
+      + '<button class="btn btn-accent" style="margin-top:14px;" data-action="symptom-next-1">Продолжить</button>'
+      + '<div class="disclaimer" role="note">'+icon('alert',{size:18,cls:'ic'})+'<span>Этот инструмент не ставит диагноз и не заменяет консультацию врача. При сильных или опасных симптомах немедленно обратитесь за медицинской помощью — звоните 103.</span></div>';
+  }
+  if(symptomWizard.step===2){
+    if(symptomWizard.redFlag) return symptomStepper()+urgentRedFlagBlock();
+    const a = symptomWizard.answers;
+    return symptomStepper()
+      + '<p style="font-size:13.5px;color:var(--ink-soft);margin-bottom:16px;">Ответьте на несколько уточняющих вопросов — это поможет точнее подобрать направление.</p>'
+      + choiceGroup('duration','Как долго это продолжается?', [['short','Менее суток'],['mid','1–3 дня'],['long','Больше недели']], a.duration)
+      + choiceGroup('fever','Температура тела повышена?', [['none','Нет, в норме'],['mild','Небольшая (до 38°C)'],['high','Высокая (выше 38°C)']], a.fever)
+      + choiceGroup('severity','Насколько выражены симптомы?', [['mild','Слабо, не мешают жить'],['moderate','Умеренно, мешают привычным делам'],['severe','Сильно, тяжело терпеть']], a.severity)
+      + '<div style="display:flex;gap:10px;margin-top:16px;"><button class="btn btn-outline" data-action="symptom-back">Назад</button><button class="btn btn-accent" style="flex:1;" data-action="symptom-next-2" '+(!(a.duration&&a.fever&&a.severity)?'disabled':'')+'>Получить рекомендацию</button></div>';
+  }
+  return symptomStepper() + renderSymptomResult();
+}
+function renderSymptomResult(){
+  const specs = analyzeSymptoms(symptomWizard.text, symptomWizard.answers);
+  const names = specs.map(s=>specName(s)).join(' или ');
+  return '<div class="symptom-result" style="border-top:none;padding-top:0;margin-top:0;">'
+    + '<p style="font-size:14px;color:var(--ink-soft);margin-bottom:12px;">По описанным симптомам можно рассмотреть консультацию: <b style="color:var(--ink);">'+names+'</b>.</p>'
+    + specs.map(s=>'<div class="result-spec"><span class="l">'+icon(specIconName(s),{size:18})+specName(s)+'</span><span style="display:flex;gap:8px;flex-wrap:wrap;"><a class="btn btn-outline btn-sm" href="#/earliest?spec='+s+'">'+icon('clock',{size:14})+'Ближайшее время</a><a class="btn btn-primary btn-sm" href="#/doctors?spec='+s+'">Найти '+specName(s).toLowerCase()+'а</a></span></div>').join('')
+    + '<p style="font-size:12.5px;color:var(--ink-faint);margin-top:12px;">Это предварительная информационная подсказка на основе указанных симптомов, а не медицинское заключение. Если состояние ухудшается — обратитесь к врачу очно.</p>'
+    + '<button class="btn btn-outline btn-sm" style="margin-top:10px;" data-action="symptom-restart">Начать заново</button>'
+  + '</div>';
+}
+function bindSymptomWizard(){
+  const root = document.getElementById('symptom-wizard');
+  if(!root) return;
+  const next1 = root.querySelector('[data-action="symptom-next-1"]');
+  if(next1){
+    next1.addEventListener('click', function(){
+      const val = document.getElementById('symptom-input').value.trim();
+      if(!val){ showToast('Опишите симптомы, чтобы продолжить'); return; }
+      symptomWizard.text = val;
+      symptomWizard.redFlag = hasRedFlags(val);
+      symptomWizard.step = 2;
+      rerenderSymptomWizard();
+    });
+  }
+  root.querySelectorAll('.symptom-choice').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      symptomWizard.answers[btn.getAttribute('data-qkey')] = btn.getAttribute('data-qval');
+      rerenderSymptomWizard();
+    });
+  });
+  const back = root.querySelector('[data-action="symptom-back"]');
+  if(back){ back.addEventListener('click', function(){ symptomWizard.step = 1; symptomWizard.redFlag=false; rerenderSymptomWizard(); }); }
+  const next2 = root.querySelector('[data-action="symptom-next-2"]');
+  if(next2){ next2.addEventListener('click', function(){ symptomWizard.step = 3; rerenderSymptomWizard(); }); }
+  const restart = root.querySelector('[data-action="symptom-restart"]');
+  if(restart){ restart.addEventListener('click', function(){ resetSymptomWizard(); rerenderSymptomWizard(); }); }
+}
+function rerenderSymptomWizard(){
+  const root = document.getElementById('symptom-wizard');
+  if(!root) return;
+  root.innerHTML = renderSymptomStep();
+  bindSymptomWizard();
+}
+
+/* ---------------- Booking flow ---------------- */
+function consentRow(name,label,checked){
+  return '<label style="display:flex;align-items:center;gap:9px;font-size:13.5px;padding:5px 0;min-height:32px;"><input type="checkbox" name="'+name+'" '+(checked?'checked':'')+' style="width:18px;height:18px;flex-shrink:0;">'+label+'</label>';
+}
+function pageBooking(doctorId, step){
+  const d = doctorById(doctorId);
+  if(!d) return '<div class="empty-state"><h3>Врач не найден</h3><a class="btn btn-outline" href="#/doctors">К списку врачей</a></div>';
+  const clinic = clinicById(d.clinic);
+  step = step || 1;
+  const draft = state.bookingDraft;
+  if(draft.doctorId !== doctorId){ state.bookingDraft = {doctorId: doctorId, date:null, time:null, patient:{}}; }
+
+  const steps = ['Врач','Дата','Время','Данные','Подтверждение'];
+  const stepperHtml = '<div class="stepper">'+steps.map((s,i)=>{
+    const n=i+1; const cls = n<step?'done':(n===step?'active':'');
+    return '<div class="step '+cls+'"><div class="snum">Шаг '+n+'</div><div class="slabel">'+s+'</div></div>';
+  }).join('')+'</div>';
+
+  let body='';
+  if(step===1){
+    body = '<div class="sidebar-card" style="position:static;">'
+      + '<div style="display:flex;gap:14px;">'+initialsAvatar(d.initials,d.color,72)+'<div><div class="doc-name" style="font-size:17px;">'+d.name+'</div><div class="doc-spec">'+icon(specIconName(d.spec),{size:15})+specName(d.spec)+'</div><div class="doc-clinic">'+clinic.name+'</div>'
+      + '<div class="rating-row" style="margin-top:6px;">'+starsSvg(d.rating)+'<span class="rating-num">'+d.rating.toFixed(1)+'</span></div></div></div>'
+      + '<div class="kv-row" style="margin-top:14px;"><span class="k">Стоимость приёма</span><span class="v" style="font-weight:700;">'+d.price.toLocaleString('ru-RU')+' ₸</span></div>'
+      + '<button class="btn btn-primary btn-block" style="margin-top:16px;" data-action="booking-next" data-step="1">Продолжить</button>'
+    + '</div>';
+  } else if(step===2){
+    const dates = nextNDates(10);
+    body = '<div class="sidebar-card" style="position:static;">'
+      + '<h4>Выберите дату приёма</h4>'
+      + '<div class="day-tabs" id="booking-day-tabs" style="margin-top:12px;">'
+        + dates.map(dt=>{
+            const key = dateKey(dt);
+            return '<button class="day-tab '+(draft.date===key?'active':'')+'" data-date="'+key+'"><div class="dow">'+WEEKDAYS[dt.getDay()]+'</div><div class="dnum">'+dt.getDate()+'</div></button>';
+          }).join('')
+      + '</div>'
+      + '<button class="btn btn-primary btn-block" style="margin-top:18px;" data-action="booking-next" data-step="2" '+(!draft.date?'disabled':'')+'>Продолжить</button>'
+    + '</div>';
+  } else if(step===3){
+    const dObj = new Date(draft.date.split('-')[0], draft.date.split('-')[1]-1, draft.date.split('-')[2]);
+    const slots = slotsForDoctorDate(d.id, dObj);
+    body = '<div class="sidebar-card" style="position:static;">'
+      + '<h4>Выберите время — '+formatDateHuman(dObj)+'</h4>'
+      + '<div class="slot-grid" id="booking-slot-grid" style="margin-top:12px;">'
+        + slots.map(s=>'<button class="slot-btn '+(s.busy?'busy':(draft.time===s.time?'selected':''))+'" '+(s.busy?'disabled':'')+' data-slot="'+s.time+'">'+s.time+'</button>').join('')
+      + '</div>'
+      + '<button class="btn btn-primary btn-block" style="margin-top:18px;" data-action="booking-next" data-step="3" '+(!draft.time?'disabled':'')+'>Продолжить</button>'
+    + '</div>';
+  } else if(step===4){
+    const p = draft.patient || {};
+    body = '<div class="sidebar-card" style="position:static;">'
+      + '<h4>Данные пациента</h4>'
+      + '<form id="patient-form" style="margin-top:12px;">'
+        + '<div class="form-row-2"><div class="form-row"><label for="p-fn">Имя</label><input id="p-fn" type="text" name="firstName" value="'+(p.firstName||'')+'" required></div><div class="form-row"><label for="p-ln">Фамилия</label><input id="p-ln" type="text" name="lastName" value="'+(p.lastName||'')+'" required></div></div>'
+        + '<div class="form-row"><label for="p-phone">Номер телефона</label><input id="p-phone" type="tel" name="phone" placeholder="+7 7__ ___-__-__" value="'+(p.phone||'')+'" required></div>'
+        + '<div class="form-row"><label for="p-bd">Дата рождения</label><input id="p-bd" type="date" name="birthdate" value="'+(p.birthdate||'')+'" required></div>'
+        + '<div class="form-row"><label for="p-cm">Комментарий для врача (необязательно)</label><input id="p-cm" type="text" name="comment" value="'+(p.comment||'')+'" placeholder="Кратко опишите причину визита"></div>'
+        + '<div class="form-row" style="background:var(--primary-tint);border-radius:var(--radius-m);padding:12px 14px;">'
+          + '<label style="margin-bottom:8px;">Доступ для врача перед приёмом</label>'
+          + '<p style="font-size:12.5px;color:var(--ink-soft);margin:0 0 10px;">Можно заранее поделиться частью вашей медицинской карты — это ускорит приём.</p>'
+          + consentRow('consent_allergies','Аллергии', p.consent?p.consent.allergies:true)
+          + consentRow('consent_labs','Последние анализы', p.consent?p.consent.labs:false)
+          + consentRow('consent_prescriptions','Текущие назначения', p.consent?p.consent.prescriptions:false)
+        + '</div>'
+        + '<button class="btn btn-primary btn-block" type="submit">Продолжить</button>'
+      + '</form>'
+    + '</div>';
+  } else if(step===5){
+    const p = draft.patient||{};
+    const c = p.consent||{};
+    const grants = [c.allergies&&'Аллергии', c.labs&&'Анализы', c.prescriptions&&'Назначения'].filter(Boolean);
+    body = '<div class="sidebar-card" style="position:static;">'
+      + '<h4>Подтверждение записи</h4>'
+      + '<div class="summary-box" style="margin-top:12px;">'
+        + '<div class="sr"><span class="k">Врач</span><span class="v">'+d.name+'</span></div>'
+        + '<div class="sr"><span class="k">Специальность</span><span class="v">'+specName(d.spec)+'</span></div>'
+        + '<div class="sr"><span class="k">Клиника</span><span class="v">'+clinic.name+'</span></div>'
+        + '<div class="sr"><span class="k">Адрес</span><span class="v">'+clinic.addr+'</span></div>'
+        + '<div class="sr"><span class="k">Дата и время</span><span class="v">'+formatDraftDate(draft.date)+', '+draft.time+'</span></div>'
+        + '<div class="sr"><span class="k">Пациент</span><span class="v">'+p.firstName+' '+p.lastName+'</span></div>'
+        + '<div class="sr"><span class="k">Телефон</span><span class="v">'+p.phone+'</span></div>'
+        + '<div class="sr"><span class="k">Доступ врачу</span><span class="v">'+(grants.length?grants.join(', '):'Не предоставлен')+'</span></div>'
+        + '<div class="sr"><span class="k">Стоимость</span><span class="v" style="font-weight:700;">'+d.price.toLocaleString('ru-RU')+' ₸</span></div>'
+      + '</div>'
+      + '<button class="btn btn-accent btn-block" data-action="booking-confirm">Подтвердить запись</button>'
+    + '</div>';
+  }
+
+  return '<div class="booking-wrap">'+stepperHtml+body+'</div>';
+}
+function formatDraftDate(key){
+  if(!key) return '';
+  const parts = key.split('-');
+  return formatDateHuman(new Date(parts[0],parts[1]-1,parts[2]));
+}
+
+function consentSummary(b){
+  const c = b.patient && b.patient.consent;
+  if(!c) return '';
+  const grants = [c.allergies&&'Аллергии', c.labs&&'Анализы', c.prescriptions&&'Назначения'].filter(Boolean);
+  return grants.join(', ');
+}
+function pageBookingConfirmed(bookingId){
+  const b = state.bookings.find(x=>x.id===bookingId);
+  if(!b) return '<div class="empty-state"><h3>Запись не найдена</h3><a class="btn btn-outline" href="#/">На главную</a></div>';
+  const d = doctorById(b.doctorId);
+  const clinic = clinicById(d.clinic);
+  return '<div class="booking-wrap">'
+    + '<div class="confirm-box">'
+      + '<div class="confirm-tick">'+icon('check',{size:30,stroke:2.2,decorative:false})+'</div>'
+      + '<h2 style="font-size:23px;">Вы успешно записаны</h2>'
+      + '<p style="color:var(--ink-soft);margin-top:6px;">Номер записи: <b>'+b.id+'</b></p>'
+    + '</div>'
+    + '<div class="summary-box">'
+      + '<div class="sr"><span class="k">Врач</span><span class="v">'+d.name+'</span></div>'
+      + '<div class="sr"><span class="k">Специальность</span><span class="v">'+specName(d.spec)+'</span></div>'
+      + '<div class="sr"><span class="k">Клиника</span><span class="v">'+clinic.name+'</span></div>'
+      + '<div class="sr"><span class="k">Адрес</span><span class="v">'+clinic.addr+'</span></div>'
+      + '<div class="sr"><span class="k">Дата и время</span><span class="v">'+formatDraftDate(b.date)+', '+b.time+'</span></div>'
+      + '<div class="sr"><span class="k">Телефон клиники</span><span class="v">'+clinic.phone+'</span></div>'
+      + (consentSummary(b) ? '<div class="sr"><span class="k">Доступ врачу</span><span class="v">'+consentSummary(b)+'</span></div>' : '')
+    + '</div>'
+    + '<div style="display:flex;gap:10px;">'
+      + '<a class="btn btn-outline" style="flex:1;" href="#/cabinet/appointments">Мои записи</a>'
+      + '<a class="btn btn-primary" style="flex:1;" href="#/">На главную</a>'
+    + '</div>'
+  + '</div>';
+}
+
+/* ---------------- Cabinet ---------------- */
+const CAB_SECTIONS = [
+  ['appointments','Мои записи'], ['medcard','Медицинская карта'], ['waitlist','Лист ожидания'], ['favorites-doctors','Избранные врачи'], ['favorites-clinics','Избранные клиники'],
+  ['reviews','Мои отзывы'], ['profile','Личные данные'], ['notifications','Настройки уведомлений'],
+];
+function pageCabinet(section){
+  section = section || 'appointments';
+  if(!state.user){
+    return '<div class="symptom-page"><div class="symptom-box" style="text-align:center;">'
+      + '<h2 style="font-size:20px;">Войдите, чтобы открыть личный кабинет</h2>'
+      + '<p style="color:var(--ink-soft);margin-top:8px;font-size:14px;">Здесь хранятся ваши записи, медицинская карта, избранное и отзывы.</p>'
+      + '<div style="display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap;"><button class="btn btn-primary" data-action="open-login-modal">Войти</button><button class="btn btn-outline" data-action="open-register-modal">Зарегистрироваться</button></div>'
+    + '</div></div>';
+  }
+  const nav = '<div class="cab-nav">'+CAB_SECTIONS.map(s=>'<a href="#/cabinet/'+s[0]+'" class="'+(s[0]===section?'active':'')+'">'+s[1]+'</a>').join('')+'<a href="#/" data-action="logout" style="color:var(--danger);margin-top:8px;">Выйти</a></div>';
+  let content='';
+  if(section==='appointments') content = cabAppointments();
+  else if(section==='medcard') content = cabMedCard();
+  else if(section==='waitlist') content = cabWaitlist();
+  else if(section==='favorites-doctors') content = cabFavDoctors();
+  else if(section==='favorites-clinics') content = cabFavClinics();
+  else if(section==='reviews') content = cabReviews();
+  else if(section==='profile') content = cabProfile();
+  else if(section==='notifications') content = cabNotifications();
+
+  return '<div class="page-head"><div class="container"><h1 style="font-size:23px;">Личный кабинет</h1></div></div>'
+    + '<div class="container cab-wrap">'+nav+'<div>'+content+'</div></div>';
+}
+function statusOf(b){
+  const now = new Date();
+  const bd = new Date(b.date.split('-')[0], b.date.split('-')[1]-1, b.date.split('-')[2]);
+  const [h,m] = b.time.split(':').map(Number);
+  bd.setHours(h,m);
+  if(b.cancelled) return 'cancelled';
+  return bd < now ? 'done' : 'upcoming';
+}
+function cabAppointments(){
+  if(!state.bookings.length) return emptyCab('calendar','Пока нет записей','Найдите врача и запишитесь на приём — он появится здесь.', '#/doctors','Найти врача');
+  const sorted = [...state.bookings].sort((a,b)=> (a.date+a.time).localeCompare(b.date+b.time));
+  return sorted.map(b=>{
+    const d = doctorById(b.doctorId); const clinic = clinicById(d.clinic);
+    const st = statusOf(b);
+    const label = st==='upcoming'?'Предстоящая':(st==='done'?'Завершена':'Отменена');
+    return '<div class="appt-card">'
+      + initialsAvatar(d.initials, d.color, 52)
+      + '<div style="flex:1;">'
+        + '<div style="display:flex;justify-content:space-between;gap:10px;"><div class="doc-name">'+d.name+'</div><span class="status-badge status-'+st+'">'+label+'</span></div>'
+        + '<div class="doc-spec">'+specName(d.spec)+' · '+clinic.name+'</div>'
+        + '<div style="font-size:13px;color:var(--ink-soft);margin-top:6px;display:flex;align-items:center;gap:5px;">'+icon('calendar',{size:14})+formatDraftDate(b.date)+', '+b.time+' · №'+b.id+'</div>'
+        + (consentSummary(b) ? '<div style="font-size:12px;color:var(--ink-faint);margin-top:3px;">Доступ врачу: '+consentSummary(b)+'</div>' : '')
+        + (st==='upcoming' ? '<div style="margin-top:10px;display:flex;gap:8px;"><button class="btn btn-outline btn-sm" data-action="cancel-booking" data-id="'+b.id+'">Отменить</button><a class="btn btn-outline btn-sm" href="#/booking/'+d.id+'">Перенести</a></div>' : '')
+        + (st==='done' ? '<div style="margin-top:10px;"><button class="btn btn-outline btn-sm" data-action="open-review-modal" data-doctor="'+d.id+'" data-verified="true">Оставить отзыв</button></div>' : '')
+      + '</div>'
+    + '</div>';
+  }).join('');
+}
+const medCardState = {tab:'allergies'};
+function cabMedCard(){
+  const tabs = [['allergies','Аллергии'],['labs','Анализы'],['prescriptions','Назначения'],['documents','Документы'],['doctors','Мои врачи']];
+  return '<div class="tab-row" id="medcard-tabs" role="tablist">'
+    + tabs.map(function(t){ return '<button class="tab-btn '+(medCardState.tab===t[0]?'active':'')+'" role="tab" aria-selected="'+(medCardState.tab===t[0])+'" data-medtab="'+t[0]+'">'+t[1]+'</button>'; }).join('')
+  + '</div>'
+  + '<div id="medcard-content">'+renderMedCardTab()+'</div>';
+}
+function renderMedCardTab(){
+  if(medCardState.tab==='allergies') return medCardAllergies();
+  if(medCardState.tab==='labs') return medCardLabs();
+  if(medCardState.tab==='prescriptions') return medCardPrescriptions();
+  if(medCardState.tab==='documents') return medCardDocuments();
+  if(medCardState.tab==='doctors') return medCardDoctors();
+  return '';
+}
+function medCardAllergies(){
+  const list = state.medProfile.allergies;
+  return '<div class="sidebar-card" style="position:static;max-width:520px;">'
+    + '<h4>Аллергии и непереносимость</h4>'
+    + '<p style="font-size:13px;color:var(--ink-soft);margin-bottom:12px;">Эта информация может быть передана врачу перед приёмом — с вашего согласия на шаге записи.</p>'
+    + (list.length ? '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;">'+list.map(function(a,i){ return '<span class="tag" style="display:inline-flex;align-items:center;gap:6px;padding:7px 11px;">'+a+'<button type="button" data-action="remove-allergy" data-idx="'+i+'" aria-label="Удалить аллергию" style="border:none;background:none;color:var(--ink-faint);cursor:pointer;line-height:1;padding:0;">'+icon('close',{size:12})+'</button></span>'; }).join('')+'</div>' : '<p style="font-size:13.5px;color:var(--ink-faint);margin-bottom:14px;">Пока не указано ни одной аллергии.</p>')
+    + '<form id="add-allergy-form" style="display:flex;gap:8px;"><label class="visually-hidden" for="allergy-input" style="position:absolute;left:-9999px;">Добавить аллергию</label><input id="allergy-input" type="text" name="allergy" placeholder="Например: пенициллин" style="flex:1;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-s);min-height:44px;background:var(--bg);color:var(--ink);font-family:inherit;" required><button class="btn btn-outline btn-sm" type="submit">Добавить</button></form>'
+  + '</div>';
+}
+function medCardLabs(){
+  const list = state.medProfile.labResults;
+  if(!list.length) return emptyCab('flask','Пока нет результатов анализов','Результаты появятся здесь после сдачи анализов через Medify.', '#/doctors','Найти врача');
+  return list.map(function(l){
+    return '<div class="appt-card"><div class="icon-btn" style="color:var(--primary);flex-shrink:0;">'+icon('flask',{size:18,decorative:false})+'</div>'
+      + '<div style="flex:1;"><div class="doc-name">'+l.name+'</div><div class="doc-spec">'+l.clinic+'</div>'
+      + '<div style="font-size:13px;color:var(--ink-soft);margin-top:4px;">'+l.date+' · <span style="color:var(--ok);font-weight:600;">'+l.status+'</span></div></div></div>';
+  }).join('');
+}
+function medCardPrescriptions(){
+  const list = state.medProfile.prescriptions;
+  if(!list.length) return emptyCab('pill','Пока нет назначений','Назначения врача появятся здесь после приёма.', '#/doctors','Найти врача');
+  return list.map(function(p){
+    return '<div class="appt-card"><div class="icon-btn" style="color:var(--accent);flex-shrink:0;">'+icon('pill',{size:18,decorative:false})+'</div>'
+      + '<div style="flex:1;"><div class="doc-name">'+p.drug+'</div><div class="doc-spec">'+p.dosage+'</div>'
+      + '<div style="font-size:13px;color:var(--ink-soft);margin-top:4px;">Назначил(а): '+p.doctor+' · '+p.date+'</div></div></div>';
+  }).join('');
+}
+function medCardDocuments(){
+  const list = state.medProfile.documents;
+  return '<div class="sidebar-card" style="position:static;max-width:520px;">'
+    + '<h4>Документы</h4>'
+    + (list.length ? list.map(function(d,i){ return '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line-soft);"><span style="color:var(--ink-faint);">'+icon('document',{size:18,decorative:false})+'</span><span style="flex:1;font-size:13.5px;">'+d.name+'</span><span style="font-size:12px;color:var(--ink-faint);">'+d.date+'</span><button type="button" data-action="remove-doc" data-idx="'+i+'" aria-label="Удалить документ" style="border:none;background:none;color:var(--ink-faint);cursor:pointer;">'+icon('trash',{size:15})+'</button></div>'; }).join('') : '<p style="font-size:13.5px;color:var(--ink-faint);">Документов пока нет.</p>')
+    + '<button class="btn btn-outline btn-sm" style="margin-top:14px;" data-action="add-doc" type="button">'+icon('upload',{size:15})+'Загрузить документ (демо)</button>'
+  + '</div>';
+}
+function medCardDoctors(){
+  const ids = Array.from(new Set(state.bookings.map(function(b){ return b.doctorId; })));
+  const docs = ids.map(function(id){ return doctorById(id); }).filter(Boolean);
+  if(!docs.length) return emptyCab('user','Пока нет врачей в истории','Запишитесь на приём — врач появится здесь.', '#/doctors','Найти врача');
+  return '<div class="card-grid">'+docs.map(function(d){ return doctorCard(d); }).join('')+'</div>';
+}
+function bindMedCard(){
+  const tabsRoot = document.getElementById('medcard-tabs');
+  if(!tabsRoot) return;
+  tabsRoot.querySelectorAll('.tab-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      medCardState.tab = btn.getAttribute('data-medtab');
+      tabsRoot.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.toggle('active', b===btn); b.setAttribute('aria-selected', b===btn); });
+      const content = document.getElementById('medcard-content');
+      content.innerHTML = renderMedCardTab();
+      bindMedCardContent();
+    });
+  });
+  bindMedCardContent();
+}
+function bindMedCardContent(){
+  const content = document.getElementById('medcard-content');
+  if(!content) return;
+  const addForm = content.querySelector('#add-allergy-form');
+  if(addForm){
+    addForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const fd = new FormData(addForm);
+      const val = (fd.get('allergy')||'').toString().trim();
+      if(!val) return;
+      state.medProfile.allergies.push(val);
+      saveState();
+      content.innerHTML = renderMedCardTab();
+      bindMedCardContent();
+      showToast('Добавлено');
+    });
+  }
+  content.querySelectorAll('[data-action="remove-allergy"]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      state.medProfile.allergies.splice(Number(btn.getAttribute('data-idx')),1);
+      saveState();
+      content.innerHTML = renderMedCardTab();
+      bindMedCardContent();
+    });
+  });
+  const addDocBtn = content.querySelector('[data-action="add-doc"]');
+  if(addDocBtn){
+    addDocBtn.addEventListener('click', function(){
+      const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+      const now = new Date();
+      state.medProfile.documents.push({name:'Документ_'+(state.medProfile.documents.length+1)+'.pdf', date: now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear()});
+      saveState();
+      content.innerHTML = renderMedCardTab();
+      bindMedCardContent();
+      showToast('Документ добавлен (демо)');
+    });
+  }
+  content.querySelectorAll('[data-action="remove-doc"]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      state.medProfile.documents.splice(Number(btn.getAttribute('data-idx')),1);
+      saveState();
+      content.innerHTML = renderMedCardTab();
+      bindMedCardContent();
+    });
+  });
+}
+function cabWaitlist(){
+  const active = state.waitlist.filter(function(w){ return !w.cancelled; });
+  if(!active.length) return emptyCab('bell','Список ожидания пуст','Если у нужного врача нет удобного времени, встаньте в лист ожидания на его странице — мы сообщим, если освободится более раннее время.', '#/doctors','Найти врача');
+  return active.map(function(w){
+    const d = doctorById(w.doctorId);
+    if(!d) return '';
+    const opened = waitlistSlotOpened(w);
+    return (opened ? '<div class="notif-banner">'
+        + '<span class="icwrap">'+icon('bell',{size:18})+'</span>'
+        + '<div style="flex:1;"><b style="display:block;font-family:var(--font-head);margin-bottom:2px;">Кто-то отменил запись к '+d.name+' — освободилось время</b>'
+        + '<span style="font-size:13px;color:var(--ink-soft);">Новое свободное время: <b>'+waitlistOpenedLabel(w)+'</b></span>'
+        + '<div style="margin-top:8px;"><a class="btn btn-accent btn-sm" href="#/booking/'+d.id+'">Записаться сейчас</a></div></div>'
+      + '</div>' : '')
+      + '<div class="appt-card">'
+      + initialsAvatar(d.initials, d.color, 52)
+      + '<div style="flex:1;">'
+        + '<div style="display:flex;justify-content:space-between;gap:10px;"><div class="doc-name">'+d.name+'</div><span class="status-badge status-upcoming">В ожидании</span></div>'
+        + '<div class="doc-spec">'+specName(d.spec)+' · '+clinicById(d.clinic).name+'</div>'
+        + '<div style="font-size:12px;color:var(--ink-faint);margin-top:6px;">В листе ожидания №'+w.id+'</div>'
+        + '<div style="margin-top:10px;display:flex;gap:8px;"><a class="btn btn-outline btn-sm" href="#/doctor/'+d.id+'">Страница врача</a><button class="btn btn-outline btn-sm" data-action="leave-waitlist" data-id="'+w.id+'">Покинуть список</button></div>'
+      + '</div>'
+    + '</div>';
+  }).join('');
+}
+function cabFavDoctors(){
+  if(!state.favDoctors.length) return emptyCab('heartOutline','Нет избранных врачей','Добавляйте врачей в избранное, чтобы быстро находить их снова.', '#/doctors','Найти врача');
+  return '<div class="card-grid">'+state.favDoctors.map(id=>doctorById(id)).filter(Boolean).map(d=>doctorCard(d)).join('')+'</div>';
+}
+function cabFavClinics(){
+  if(!state.favClinics.length) return emptyCab('heartOutline','Нет избранных клиник','Добавляйте клиники в избранное, чтобы быстро находить их снова.', '#/clinics','Найти клинику');
+  return '<div class="card-grid">'+state.favClinics.map(id=>clinicById(id)).filter(Boolean).map(c=>clinicCard(c)).join('')+'</div>';
+}
+function cabReviews(){
+  if(!state.myReviews.length) return emptyCab('star','Вы ещё не оставляли отзывов','После завершённого приёма вы сможете оценить врача.', '#/cabinet/appointments','К моим записям');
+  return state.myReviews.map(r=>{
+    const d = doctorById(r.doctorId);
+    return reviewCard(Object.assign({}, r, {name: d ? d.name : 'Врач'}))+'<div style="height:10px;"></div>';
+  }).join('');
+}
+function cabProfile(){
+  const u = state.user;
+  return '<div class="sidebar-card" style="position:static;max-width:440px;">'
+    + '<h4>Личные данные</h4>'
+    + '<form id="profile-form" style="margin-top:12px;">'
+      + '<div class="form-row"><label for="pr-name">Имя и фамилия</label><input id="pr-name" type="text" name="name" value="'+u.name+'"></div>'
+      + '<div class="form-row"><label for="pr-phone">Телефон</label><input id="pr-phone" type="tel" name="phone" value="'+(u.phone||'')+'"></div>'
+      + '<div class="form-row"><label for="pr-bd">Дата рождения</label><input id="pr-bd" type="date" name="birthdate" value="'+(u.birthdate||'')+'"></div>'
+      + '<button class="btn btn-primary" type="submit">Сохранить</button>'
+    + '</form>'
+  + '</div>';
+}
+function cabNotifications(){
+  const n = state.user.notif || {reminderDay:true, reminderHour:true, promo:false};
+  return '<div class="sidebar-card" style="position:static;max-width:440px;">'
+    + '<h4>Настройки уведомлений</h4>'
+    + notifRow('reminderDay','Напоминание за 1 день до приёма', n.reminderDay)
+    + notifRow('reminderHour','Напоминание за 1 час до приёма', n.reminderHour)
+    + notifRow('promo','Новости и специальные предложения', n.promo)
+    + '<div class="info-block" style="margin-top:18px;"><h3 style="font-size:14px;">Пример уведомления</h3>'
+    +   '<div class="review-card" style="background:var(--primary-tint);border:none;font-size:13.5px;">Напоминание: завтра в 15:30 у вас приём у терапевта Анны Ивановой.</div>'
+    + '</div>'
+  + '</div>';
+  function notifRow(key,label,checked){
+    return '<label style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line-soft);font-size:14px;min-height:44px;">'
+      + '<span>'+label+'</span><input type="checkbox" data-notif="'+key+'" '+(checked?'checked':'')+' style="width:20px;height:20px;">'
+    + '</label>';
+  }
+}
+function emptyCab(iconName,title,desc,href,cta){
+  return '<div class="empty-state">'+icon(iconName,{size:38,cls:'ic',decorative:false})+'<h3>'+title+'</h3><p>'+desc+'</p><a class="btn btn-primary" style="margin-top:14px;" href="'+href+'">'+cta+'</a></div>';
+}
+/* ---------------- Urgent Care ---------------- */
+const REDFLAG_SYMPTOMS = [
+  'Сильная боль или давящее чувство в груди',
+  'Затруднённое дыхание, одышка в покое',
+  'Внезапная слабость или онемение одной стороны тела',
+  'Спутанная речь или спутанность сознания',
+  'Обморок или потеря сознания',
+  'Сильное кровотечение, которое не останавливается',
+  'Судороги',
+  'Высокая температура (выше 39°C) у ребёнка до 1 года',
+];
+const urgentCareState = { selected: new Set() };
+function pageUrgentCare(){
+  urgentCareState.selected = new Set();
+  return '<div class="page-head" style="border-bottom-color:var(--danger);"><div class="container">'
+    + '<div class="breadcrumb"><a href="#/">Главная</a> / Срочная помощь</div>'
+    + '<h1 style="font-size:25px;display:flex;align-items:center;gap:10px;">'+icon('siren',{size:24,cls:'',stroke:1.8})+'Срочная помощь</h1>'
+    + '<p style="color:var(--ink-soft);font-size:14px;margin-top:6px;max-width:60ch;">Если жизни угрожает опасность — не теряйте время на этой странице. Звоните 103 (скорая помощь) или 112 (единый номер экстренных служб) прямо сейчас.</p>'
+    + '<div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">'
+      + '<a class="btn btn-accent" href="tel:103" style="background:var(--danger);">'+icon('phone',{size:17})+'Позвонить 103</a>'
+      + '<a class="btn btn-outline" href="tel:112" style="border-color:var(--danger);color:var(--danger);">'+icon('phone',{size:17})+'Позвонить 112</a>'
+    + '</div>'
+  + '</div></div>'
+  + '<div class="container" style="padding:26px 20px 60px;">'
+    + '<div id="urgent-content">'+renderUrgentContent()+'</div>'
+  + '</div>';
+}
+function renderUrgentContent(){
+  const anySelected = urgentCareState.selected.size > 0;
+  const erClinics = CLINICS.filter(function(c){ return c.emergency24; })
+    .map(function(c){ return {c:c, dist:clinicDistanceKm(c)}; })
+    .sort(function(a,b){ return a.dist-b.dist; });
+  return '<div class="info-grid">'
+    + '<div>'
+      + '<div class="info-block">'
+        + '<h3>Есть ли у вас (или у того, кому вы помогаете) хотя бы один из этих признаков?</h3>'
+        + '<p style="font-size:13px;color:var(--ink-faint);margin-bottom:14px;">Мы не ставим диагноз — этот список помогает быстро понять, нужна ли экстренная помощь.</p>'
+        + '<div style="display:flex;flex-direction:column;gap:2px;">'
+        + REDFLAG_SYMPTOMS.map(function(s,i){
+            const checked = urgentCareState.selected.has(i);
+            return '<label style="display:flex;align-items:flex-start;gap:11px;padding:11px 12px;border-radius:var(--radius-s);border:1px solid '+(checked?'var(--danger)':'var(--line)')+';background:'+(checked?'var(--danger-tint)':'var(--surface)')+';margin-bottom:8px;font-size:14px;min-height:44px;"><input type="checkbox" data-urgidx="'+i+'" '+(checked?'checked':'')+' style="width:19px;height:19px;margin-top:1px;flex-shrink:0;">'+s+'</label>';
+          }).join('')
+        + '</div>'
+      + '</div>'
+      + (anySelected ? (
+          '<div class="disclaimer" style="background:var(--danger-tint);border-color:var(--danger);align-items:flex-start;">'
+          + icon('siren',{size:22,cls:'ic',decorative:false})
+          + '<div><b style="display:block;color:var(--danger);font-family:var(--font-head);margin-bottom:4px;">Это может быть неотложным состоянием</b>'
+          + 'Позвоните 103 или 112 сейчас, или срочно доставьте человека в ближайшее приёмное отделение — список ниже отсортирован по расстоянию. Оставайтесь на связи с диспетчером и следуйте его инструкциям; не давайте есть и пить, если человек без сознания.</div>'
+          + '</div>'
+        ) : (
+          '<div class="disclaimer" role="note" style="align-items:flex-start;">'+icon('alert',{size:18,cls:'ic'})+'<span>Если ни один пункт не подходит, но вы всё равно сильно обеспокоены — используйте <a href="#/symptom-checker" style="text-decoration:underline;">AI Symptom Checker</a> или запишитесь к врачу через обычный поиск.</span></div>'
+        ))
+    + '</div>'
+    + '<div>'
+      + '<div class="sidebar-card" style="margin-bottom:16px;">'
+        + '<h4 style="display:flex;align-items:center;gap:8px;">'+icon('bed',{size:17})+'Ближайшие клиники с круглосуточным приёмом</h4>'
+        + erClinics.map(function(r){
+            return '<div style="padding:12px 0;border-bottom:1px solid var(--line-soft);">'
+              + '<div style="font-weight:700;font-family:var(--font-head);font-size:14px;">'+r.c.name+'</div>'
+              + '<div style="font-size:12.5px;color:var(--ink-faint);margin-top:2px;">≈'+r.dist+' км · '+r.c.district+' р-н</div>'
+              + '<div style="font-size:12.5px;color:var(--ink-soft);margin-top:2px;">'+r.c.addr+'</div>'
+              + '<div style="display:flex;gap:8px;margin-top:8px;"><a class="btn btn-primary btn-sm" href="tel:'+r.c.phone.replace(/[^+\d]/g,'')+'">'+icon('phone',{size:13})+'Позвонить</a><a class="btn btn-outline btn-sm" href="#/clinic/'+r.c.id+'">На карте клиники</a></div>'
+            + '</div>';
+          }).join('')
+      + '</div>'
+      + '<div class="sidebar-card">'
+        + '<h4>Пока ждёте скорую</h4>'
+        + '<ul style="margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-soft);line-height:1.7;">'
+          + '<li>Чётко назовите диспетчеру адрес и что произошло</li>'
+          + '<li>Не кладите трубку, пока диспетчер не разрешит</li>'
+          + '<li>Не давайте есть, пить или лекарства без указания диспетчера</li>'
+          + '<li>Если есть возможность — откройте дверь для бригады скорой</li>'
+        + '</ul>'
+      + '</div>'
+    + '</div>'
+  + '</div>';
+}
+function bindUrgentCare(){
+  const root = document.getElementById('urgent-content');
+  if(!root) return;
+  root.querySelectorAll('[data-urgidx]').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      const idx = Number(cb.getAttribute('data-urgidx'));
+      if(cb.checked) urgentCareState.selected.add(idx); else urgentCareState.selected.delete(idx);
+      root.innerHTML = renderUrgentContent();
+      bindUrgentCare();
+    });
+  });
+}
+function pageFavorites(){
+  return '<div class="page-head"><div class="container"><h1 style="font-size:23px;">Избранное</h1></div></div>'
+    + '<div class="container" style="padding:24px 20px 20px;"><h3 style="font-size:16px;margin-bottom:14px;">Врачи</h3>'
+    + (state.favDoctors.length ? '<div class="card-grid">'+state.favDoctors.map(id=>doctorById(id)).filter(Boolean).map(d=>doctorCard(d)).join('')+'</div>' : '<p style="color:var(--ink-faint);font-size:14px;">Пока нет избранных врачей.</p>')
+    + '</div>'
+    + '<div class="container" style="padding:10px 20px 60px;"><h3 style="font-size:16px;margin-bottom:14px;">Клиники</h3>'
+    + (state.favClinics.length ? '<div class="card-grid">'+state.favClinics.map(id=>clinicById(id)).filter(Boolean).map(c=>clinicCard(c)).join('')+'</div>' : '<p style="color:var(--ink-faint);font-size:14px;">Пока нет избранных клиник.</p>')
+    + '</div>';
+}
+
+/* ---------------- Clinic admin dashboard (separate demo surface for clinic staff) ---------------- */
+function pageClinicAdmin(parts, query){
+  const clinicId = parts[1];
+  if(!clinicId) return clinicAdminLoginPage();
+  const c = clinicById(clinicId);
+  if(!c) return clinicAdminLoginPage('Клиника не найдена. Выберите клинику из списка.');
+  const section = parts[2] || 'doctors';
+  return clinicAdminHeaderHtml(c, section) + clinicAdminBody(c, section);
+}
+function clinicAdminLoginPage(err){
+  return '<div class="page-head"><div class="container">'
+    + '<div class="breadcrumb"><a href="#/">Главная</a> / Кабинет клиники</div>'
+    + '<h1 style="font-size:25px;">Кабинет клиники</h1>'
+    + '<p style="color:var(--ink-soft);font-size:14px;margin-top:6px;max-width:60ch;">Демо-раздел для администраторов клиник: управление врачами, расписанием и записями. Полноценной авторизации здесь нет — выберите клинику, чтобы войти.</p>'
+  + '</div></div>'
+  + '<div class="symptom-page"><div class="symptom-box">'
+    + (err ? '<div class="disclaimer" role="alert" style="margin-bottom:16px;">'+icon('alert',{size:18,cls:'ic'})+'<span>'+err+'</span></div>' : '')
+    + '<form id="clinic-admin-login">'
+      + '<div class="form-row"><label for="ca-clinic">Выберите клинику</label><select id="ca-clinic">'+CLINICS.map(function(c){ return '<option value="'+c.id+'">'+c.name+'</option>'; }).join('')+'</select></div>'
+      + '<button class="btn btn-primary btn-block" type="submit">Войти как клиника (демо)</button>'
+    + '</form>'
+  + '</div></div>';
+}
+function clinicAdminHeaderHtml(c, section){
+  const tabs = [['doctors','Врачи'],['schedule','Расписание'],['appointments','Записи']];
+  return '<div class="clinic-admin-header"><div class="container">'
+    + '<div style="display:flex;align-items:center;gap:10px;"><span style="width:34px;height:34px;border-radius:9px;background:'+c.color+';display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;">'+icon('building',{size:17,decorative:false})+'</span><b style="font-family:var(--font-head);font-size:15px;">Кабинет клиники — '+c.name+'</b></div>'
+    + '<div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">'
+      + tabs.map(function(t){ return '<a href="#/clinic-admin/'+c.id+'/'+t[0]+'" style="'+(section===t[0]?'color:#fff;text-decoration:underline;':'')+'">'+t[1]+'</a>'; }).join('')
+      + '<a href="#/" data-action="clinic-admin-exit" style="color:#fff;">'+icon('close',{size:13})+' Выйти</a>'
+    + '</div>'
+  + '</div></div>';
+}
+function clinicAdminBody(c, section){
+  let content = '';
+  if(section==='schedule') content = clinicAdminScheduleTab(c);
+  else if(section==='appointments') content = clinicAdminAppointmentsTab(c);
+  else content = clinicAdminDoctorsTab(c);
+  return '<div class="container" style="padding:26px 20px 60px;">'+content+'</div>';
+}
+function clinicAdminDoctorsTab(c){
+  const docs = effectiveDoctorsByClinic(c.id);
+  return '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;"><h3 style="font-size:17px;">Врачи клиники ('+docs.length+')</h3><button class="btn btn-primary btn-sm" type="button" data-action="ca-add-doctor" data-clinic="'+c.id+'">'+icon('plus',{size:14})+'Добавить врача</button></div>'
+    + '<div style="overflow-x:auto;"><table class="admin-table"><tr><th>Врач</th><th>Специальность</th><th>Стаж</th><th>Цена</th><th>Рейтинг</th><th></th></tr>'
+    + docs.map(function(d){
+        return '<tr><td>'+d.name+'</td><td>'+specName(d.spec)+'</td><td>'+d.exp+' лет</td><td>'+d.price.toLocaleString('ru-RU')+' ₸</td><td>'+d.rating.toFixed(1)+'</td>'
+          + '<td style="text-align:right;white-space:nowrap;"><button class="btn btn-outline btn-sm" type="button" data-action="ca-edit-doctor" data-clinic="'+c.id+'" data-doctor="'+d.id+'">Изменить</button> <button class="btn btn-outline btn-sm" style="color:var(--danger);border-color:var(--danger);" type="button" data-action="ca-remove-doctor" data-clinic="'+c.id+'" data-doctor="'+d.id+'">Удалить</button></td></tr>';
+      }).join('')
+    + '</table></div>';
+}
+function clinicAdminScheduleTab(c){
+  const sched = effectiveClinicSchedule(c);
+  const dayNames = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+  return '<div class="sidebar-card" style="position:static;max-width:520px;">'
+    + '<h4>Расписание клиники</h4>'
+    + '<form id="ca-schedule-form" data-clinic="'+c.id+'">'
+      + '<div class="form-row"><label>Рабочие дни</label><div style="display:flex;gap:6px;flex-wrap:wrap;">'
+        + dayNames.map(function(dn,i){ const checked = sched.openDays.indexOf(i)!==-1; return '<label style="display:flex;align-items:center;gap:5px;font-size:13px;border:1px solid var(--line);border-radius:20px;padding:6px 10px;min-height:32px;"><input type="checkbox" name="day" value="'+i+'" '+(checked?'checked':'')+'>'+dn+'</label>'; }).join('')
+      + '</div></div>'
+      + '<div class="form-row-2"><div class="form-row"><label for="ca-from">Начало работы (час)</label><input id="ca-from" type="number" min="0" max="23" name="openFrom" value="'+sched.openFrom+'"></div><div class="form-row"><label for="ca-to">Конец работы (час)</label><input id="ca-to" type="number" min="1" max="24" name="openTo" value="'+sched.openTo+'"></div></div>'
+      + '<button class="btn btn-primary" type="submit">Сохранить расписание</button>'
+    + '</form>'
+  + '</div>';
+}
+function clinicAdminAppointmentsTab(c){
+  const docs = doctorsByClinic(c.id);
+  const real = state.bookings.filter(function(b){ const d = doctorById(b.doctorId); return d && d.clinic===c.id; })
+    .map(function(b){ return Object.assign({}, b, {patientName: b.patient ? (b.patient.firstName+' '+b.patient.lastName) : (state.user?state.user.name:'Пациент')}); });
+  const rnd = seededRandom(hashStr(c.id+'-admin-appts'));
+  const dates = nextNDates(6);
+  const synth = [];
+  if(docs.length){
+    for(let i=0;i<8;i++){
+      const doc = docs[Math.floor(rnd()*docs.length)];
+      const date = dates[Math.floor(rnd()*dates.length)];
+      const hour = 9+Math.floor(rnd()*8);
+      const min = rnd()<0.5?'00':'30';
+      synth.push({id:'SYN-'+(i+1), doctorId:doc.id, patientName: pickReviewName(c.id+'-appt', i), date: dateKey(date), time: String(hour).padStart(2,'0')+':'+min});
+    }
+  }
+  const all = real.concat(synth).sort(function(a,b){ return (a.date+a.time).localeCompare(b.date+b.time); });
+  if(!all.length) return '<h3 style="font-size:17px;margin-bottom:14px;">Записи</h3><p style="color:var(--ink-faint);font-size:14px;">Записей пока нет.</p>';
+  return '<h3 style="font-size:17px;margin-bottom:14px;">Записи ('+all.length+')</h3>'
+    + '<div style="overflow-x:auto;"><table class="admin-table"><tr><th>Пациент</th><th>Врач</th><th>Дата</th><th>Время</th></tr>'
+    + all.map(function(b){ const d = doctorById(b.doctorId); return '<tr><td>'+(b.patientName||'—')+'</td><td>'+(d?d.name:'—')+'</td><td>'+formatDraftDate(b.date)+'</td><td>'+b.time+'</td></tr>'; }).join('')
+    + '</table></div>';
+}
+function caDoctorModal(clinicId, doctorId){
+  const c = clinicById(clinicId);
+  const existing = doctorId ? effectiveDoctorsByClinic(clinicId).find(function(d){ return d.id===doctorId; }) : null;
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.setAttribute('role','dialog');
+  overlay.setAttribute('aria-modal','true');
+  overlay.innerHTML = '<div class="modal-box">'
+    + '<h3 style="font-size:18px;">'+(existing?'Изменить врача':'Добавить врача')+'</h3>'
+    + '<form id="ca-doctor-form" style="margin-top:12px;">'
+      + '<div class="form-row"><label for="ca-d-name">Имя врача</label><input id="ca-d-name" type="text" name="name" value="'+(existing?existing.name:'')+'" required></div>'
+      + '<div class="form-row"><label for="ca-d-spec">Специальность</label><select id="ca-d-spec" name="spec">'+SPECIALTIES.map(function(s){ return '<option value="'+s.id+'" '+(existing&&existing.spec===s.id?'selected':'')+'>'+s.name+'</option>'; }).join('')+'</select></div>'
+      + '<div class="form-row-2"><div class="form-row"><label for="ca-d-exp">Стаж (лет)</label><input id="ca-d-exp" type="number" min="0" name="exp" value="'+(existing?existing.exp:5)+'"></div><div class="form-row"><label for="ca-d-price">Цена приёма (₸)</label><input id="ca-d-price" type="number" min="0" name="price" value="'+(existing?existing.price:8000)+'"></div></div>'
+      + '<button class="btn btn-primary btn-block" type="submit">Сохранить</button>'
+      + '<button class="btn btn-ghost btn-block" type="button" id="ca-doctor-cancel">Отмена</button>'
+    + '</form>'
+  + '</div>';
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.remove(); });
+  overlay.querySelector('#ca-doctor-cancel').addEventListener('click', function(){ overlay.remove(); });
+  overlay.querySelector('#ca-doctor-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const name = fd.get('name').toString().trim();
+    const spec = fd.get('spec');
+    const exp = Number(fd.get('exp'))||0;
+    const price = Number(fd.get('price'))||0;
+    const ov = clinicOverride(clinicId);
+    if(existing && existing.id.indexOf('adm-')===0){
+      const added = ov.addedDoctors.find(function(d){ return d.id===existing.id; });
+      if(added){ added.name=name; added.spec=spec; added.exp=exp; added.price=price; added.initials = name.split(' ').slice(0,2).map(function(p){return p[0];}).join(''); }
+    } else if(existing){
+      ov.doctorEdits[existing.id] = {name:name, spec:spec, exp:exp, price:price};
+    } else {
+      const initials = name.split(' ').slice(0,2).map(function(p){return p[0];}).join('') || 'ВР';
+      ov.addedDoctors.push({
+        id: 'adm-'+Date.now(), name: name, spec: spec, clinic: clinicId, exp: exp, rating: 4.5, reviews: 0,
+        price: price, langs:['рус'], edu:'Указывается администратором клиники', about:'Добавлено администратором клиники (демо).',
+        initials: initials, color: AVATAR_COLORS[hashStr(name)%AVATAR_COLORS.length], formats:['Очно'],
+      });
+    }
+    saveState(); overlay.remove(); showToast('Сохранено'); render();
+  });
+}
+
+/* ---------------- Router ---------------- */
+function parseHash(){
+  const raw = location.hash.slice(1) || '/';
+  const [path, qs] = raw.split('?');
+  return {path: path||'/', query: parseQuery(qs)};
+}
+function render(){
+  const {path, query} = parseHash();
+  const parts = path.split('/').filter(Boolean);
+  let html = '';
+  let routeKey = '#/'+ (parts[0]||'');
+
+  if(parts.length===0){ html = pageHome(); routeKey='#/'; }
+  else if(parts[0]==='doctors'){ html = pageDoctors(query); routeKey='#/doctors'; }
+  else if(parts[0]==='clinics'){ html = pageClinics(query); routeKey='#/clinics'; }
+  else if(parts[0]==='compare'){ html = pageCompare(query); routeKey='#/compare'; }
+  else if(parts[0]==='urgent-care'){ html = pageUrgentCare(); routeKey='#/urgent-care'; }
+  else if(parts[0]==='doctor' && parts[1]){ html = pageDoctor(parts[1]); routeKey=''; }
+  else if(parts[0]==='clinic' && parts[1]){ html = pageClinic(parts[1]); routeKey=''; }
+  else if(parts[0]==='symptom-checker'){ html = pageSymptomChecker(); routeKey='#/symptom-checker'; }
+  else if(parts[0]==='booking' && parts[1]){ html = pageBooking(parts[1], parts[2]?Number(parts[2]):1); routeKey=''; }
+  else if(parts[0]==='booking-confirmed' && parts[1]){ html = pageBookingConfirmed(parts[1]); routeKey=''; }
+  else if(parts[0]==='cabinet'){ html = pageCabinet(parts[1]); routeKey='#/cabinet'; }
+  else if(parts[0]==='favorites'){ html = pageFavorites(); routeKey=''; }
+  else if(parts[0]==='compare-doctors'){ html = pageCompareDoctors(query); routeKey=''; }
+  else if(parts[0]==='earliest'){ html = pageEarliest(query); routeKey=''; }
+  else if(parts[0]==='clinic-admin'){ html = pageClinicAdmin(parts, query); routeKey=''; }
+  else { html = pageHome(); routeKey='#/'; }
+
+  document.getElementById('app').innerHTML = renderHeader(routeKey) + '<main id="main">'+html+'</main>' + renderFooter();
+  window.scrollTo(0,0);
+  bindPageEvents(parts, query);
+  updateCompareTray();
+}
+
+/* ---------------- Event binding (delegated + page-specific) ---------------- */
+function bindPageEvents(parts, query){
+  const app = document.getElementById('app');
+
+  const heroForm = app.querySelector('[data-action="hero-search"]');
+  if(heroForm){
+    heroForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const q = heroForm.querySelector('input[name=q]').value.trim();
+      location.hash = '#/doctors?q='+encodeURIComponent(q);
+    });
+  }
+
+  const filtersBar = document.getElementById('doc-filters');
+  if(filtersBar){
+    const ids = ['f-q','f-spec','f-clinic','f-district','f-price','f-exp','f-rating','f-lang','f-sort'];
+    ids.forEach(id=>{
+      const el = document.getElementById(id);
+      if(!el) return;
+      const evt = (id==='f-q') ? 'input' : 'change';
+      el.addEventListener(evt, function(){
+        doctorFilterState.q = document.getElementById('f-q').value;
+        doctorFilterState.spec = document.getElementById('f-spec').value;
+        doctorFilterState.clinic = document.getElementById('f-clinic').value;
+        doctorFilterState.district = document.getElementById('f-district').value;
+        doctorFilterState.maxPrice = document.getElementById('f-price').value;
+        doctorFilterState.minExp = document.getElementById('f-exp').value;
+        doctorFilterState.minRating = document.getElementById('f-rating').value;
+        doctorFilterState.lang = document.getElementById('f-lang').value;
+        doctorFilterState.sort = document.getElementById('f-sort').value;
+        rerenderDoctorsListOnly();
+      });
+    });
+    const onlineBtn = document.getElementById('f-online');
+    if(onlineBtn){
+      onlineBtn.addEventListener('click', function(){
+        doctorFilterState.format = doctorFilterState.format==='Онлайн' ? '' : 'Онлайн';
+        rerenderDoctorsListOnly();
+      });
+    }
+  }
+
+  const clinicFilters = document.getElementById('clinic-filters');
+  if(clinicFilters){
+    ['cf-district','cf-spec','cf-price'].forEach(function(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      el.addEventListener('change', function(){
+        clinicFilterState.district = document.getElementById('cf-district').value;
+        clinicFilterState.spec = document.getElementById('cf-spec').value;
+        clinicFilterState.maxPrice = document.getElementById('cf-price').value;
+        rerenderClinicsOnly();
+      });
+    });
+    const openBtn = document.getElementById('cf-open');
+    if(openBtn) openBtn.addEventListener('click', function(){ clinicFilterState.openNow = !clinicFilterState.openNow; rerenderClinicsOnly(); });
+    const todayBtn = document.getElementById('cf-today');
+    if(todayBtn) todayBtn.addEventListener('click', function(){ clinicFilterState.todaySlot = !clinicFilterState.todaySlot; rerenderClinicsOnly(); });
+  }
+
+  const docTabs = document.getElementById('doc-tabs');
+  if(docTabs && parts[0]==='doctor'){
+    const d = doctorById(parts[1]);
+    docTabs.querySelectorAll('.tab-btn').forEach(btn=>{
+      btn.addEventListener('click', function(){
+        docTabs.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+        btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+        const tab = btn.getAttribute('data-tab');
+        const content = document.getElementById('doc-tab-content');
+        if(tab==='about') content.innerHTML = docTabAbout(d, clinicById(d.clinic));
+        else if(tab==='schedule'){ pageDoctor._selDate=null; content.innerHTML = docTabSchedule(d); bindScheduleTab(d); }
+        else if(tab==='reviews') content.innerHTML = docTabReviews(d);
+        else if(tab==='clinic') content.innerHTML = docTabClinic(d);
+        bindGlobalActions(content);
+      });
+    });
+  }
+
+  if(parts[0]==='symptom-checker'){ bindSymptomWizard(); }
+  if(parts[0]==='urgent-care'){ bindUrgentCare(); }
+  if(parts[0]==='cabinet' && parts[1]==='medcard'){ bindMedCard(); }
+  const compareSelect = document.getElementById('compare-service');
+  if(compareSelect){
+    compareSelect.addEventListener('change', function(){
+      location.hash = '#/compare?service='+encodeURIComponent(compareSelect.value);
+    });
+  }
+  const earliestSelect = document.getElementById('earliest-spec');
+  if(earliestSelect){
+    earliestSelect.addEventListener('change', function(){
+      location.hash = '#/earliest'+(earliestSelect.value?'?spec='+encodeURIComponent(earliestSelect.value):'');
+    });
+  }
+
+  if(parts[0]==='clinic-admin'){
+    const loginForm = document.getElementById('clinic-admin-login');
+    if(loginForm){
+      loginForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        const clinicId = document.getElementById('ca-clinic').value;
+        state.clinicAdminSession = clinicId; saveState();
+        location.hash = '#/clinic-admin/'+clinicId+'/doctors';
+      });
+    }
+    app.querySelectorAll('[data-action="ca-add-doctor"]').forEach(function(btn){
+      btn.addEventListener('click', function(){ caDoctorModal(btn.getAttribute('data-clinic'), null); });
+    });
+    app.querySelectorAll('[data-action="ca-edit-doctor"]').forEach(function(btn){
+      btn.addEventListener('click', function(){ caDoctorModal(btn.getAttribute('data-clinic'), btn.getAttribute('data-doctor')); });
+    });
+    app.querySelectorAll('[data-action="ca-remove-doctor"]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        const clinicId = btn.getAttribute('data-clinic'), doctorId = btn.getAttribute('data-doctor');
+        const ov = clinicOverride(clinicId);
+        if(doctorId.indexOf('adm-')===0){ ov.addedDoctors = ov.addedDoctors.filter(function(d){ return d.id!==doctorId; }); }
+        else if(ov.removedDoctorIds.indexOf(doctorId)===-1){ ov.removedDoctorIds.push(doctorId); }
+        saveState(); showToast('Врач удалён из списка клиники'); render();
+      });
+    });
+    const scheduleForm = document.getElementById('ca-schedule-form');
+    if(scheduleForm){
+      scheduleForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        const clinicId = scheduleForm.getAttribute('data-clinic');
+        const fd = new FormData(scheduleForm);
+        const days = fd.getAll('day').map(Number);
+        const openFrom = Number(fd.get('openFrom'));
+        const openTo = Number(fd.get('openTo'));
+        const ov = clinicOverride(clinicId);
+        ov.schedule = {openDays: days, openFrom: openFrom, openTo: openTo, workDays: days.length+' дней в неделю', workHours: String(openFrom).padStart(2,'0')+':00–'+String(openTo).padStart(2,'0')+':00'};
+        saveState(); showToast('Расписание сохранено'); render();
+      });
+    }
+    app.querySelectorAll('[data-action="clinic-admin-exit"]').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        state.clinicAdminSession = null; saveState();
+        location.hash = '#/';
+      });
+    });
+  }
+
+  if(parts[0]==='booking' && parts[1]){
+    const doctorId = parts[1];
+    const dayTabs = document.getElementById('booking-day-tabs');
+    if(dayTabs){
+      dayTabs.querySelectorAll('.day-tab').forEach(btn=>{
+        btn.addEventListener('click', function(){
+          state.bookingDraft.date = btn.getAttribute('data-date');
+          state.bookingDraft.time = null;
+          location.hash = '#/booking/'+doctorId+'/3';
+        });
+      });
+    }
+    const slotGrid = document.getElementById('booking-slot-grid');
+    if(slotGrid){
+      slotGrid.querySelectorAll('.slot-btn:not(.busy)').forEach(btn=>{
+        btn.addEventListener('click', function(){
+          state.bookingDraft.time = btn.getAttribute('data-slot');
+          location.hash = '#/booking/'+doctorId+'/4';
+        });
+      });
+    }
+    app.querySelectorAll('[data-action="booking-next"]').forEach(btn=>{
+      btn.addEventListener('click', function(){
+        const s = Number(btn.getAttribute('data-step'));
+        location.hash = '#/booking/'+doctorId+'/'+(s+1);
+      });
+    });
+    const patientForm = document.getElementById('patient-form');
+    if(patientForm){
+      patientForm.addEventListener('submit', function(e){
+        e.preventDefault();
+        const fd = new FormData(patientForm);
+        state.bookingDraft.patient = {
+          firstName: fd.get('firstName'), lastName: fd.get('lastName'),
+          phone: fd.get('phone'), birthdate: fd.get('birthdate'), comment: fd.get('comment'),
+          consent: {
+            allergies: fd.get('consent_allergies')==='on',
+            labs: fd.get('consent_labs')==='on',
+            prescriptions: fd.get('consent_prescriptions')==='on',
+          },
+        };
+        location.hash = '#/booking/'+doctorId+'/5';
+      });
+    }
+    const confirmBtn = app.querySelector('[data-action="booking-confirm"]');
+    if(confirmBtn){
+      confirmBtn.addEventListener('click', function(){
+        const id = 'MC-'+Math.floor(100000+Math.random()*899999);
+        const b = Object.assign({id:id}, state.bookingDraft);
+        state.bookings.push(b);
+        if(!state.user){ state.user = {name: b.patient.firstName+' '+b.patient.lastName, phone: b.patient.phone}; }
+        saveState();
+        state.bookingDraft = {};
+        location.hash = '#/booking-confirmed/'+id;
+      });
+    }
+  }
+
+  const profileForm = document.getElementById('profile-form');
+  if(profileForm){
+    profileForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const fd = new FormData(profileForm);
+      state.user.name = fd.get('name'); state.user.phone = fd.get('phone'); state.user.birthdate = fd.get('birthdate');
+      saveState(); showToast('Данные сохранены');
+    });
+  }
+  app.querySelectorAll('[data-notif]').forEach(cb=>{
+    cb.addEventListener('change', function(){
+      if(!state.user.notif) state.user.notif = {};
+      state.user.notif[cb.getAttribute('data-notif')] = cb.checked;
+      saveState(); showToast('Настройки обновлены');
+    });
+  });
+
+  bindGlobalActions(app);
+  bindScheduleTab(parts[0]==='doctor' ? doctorById(parts[1]) : null);
+}
+
+function bindScheduleTab(d){
+  if(!d) return;
+  const dayTabs = document.getElementById('day-tabs');
+  if(!dayTabs) return;
+  dayTabs.querySelectorAll('.day-tab').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      pageDoctor._selDate = btn.getAttribute('data-date');
+      const content = document.getElementById('doc-tab-content');
+      content.innerHTML = docTabSchedule(d);
+      bindScheduleTab(d);
+    });
+  });
+}
+
+function rerenderDoctorsListOnly(){
+  const app = document.getElementById('app');
+  const main = app.querySelector('main');
+  main.innerHTML = pageDoctors({});
+  bindPageEvents(['doctors'], {});
+}
+function rerenderClinicsOnly(){
+  const app = document.getElementById('app');
+  const main = app.querySelector('main');
+  main.innerHTML = pageClinics({});
+  bindPageEvents(['clinics'], {});
+}
+
+/* ---------------- Global delegated actions (favorites, modals, theme) ---------------- */
+function bindGlobalActions(scope){
+  scope.querySelectorAll('[data-action="toggle-fav-doctor"]').forEach(btn=>{
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      toggleFav('doctor', btn.getAttribute('data-id'));
+      render();
+    });
+  });
+  scope.querySelectorAll('[data-action="toggle-fav-clinic"]').forEach(btn=>{
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      toggleFav('clinic', btn.getAttribute('data-id'));
+      render();
+    });
+  });
+  scope.querySelectorAll('[data-action="toggle-compare-doctor"]').forEach(btn=>{
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      toggleCompare(btn.getAttribute('data-id'));
+      render();
+    });
+  });
+  scope.querySelectorAll('[data-action="clear-compare"]').forEach(btn=>{
+    btn.addEventListener('click', function(){ clearCompare(); updateCompareTray(); });
+  });
+  scope.querySelectorAll('[data-action="join-waitlist"]').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      const doctorId = btn.getAttribute('data-doctor');
+      joinWaitlist(doctorId);
+      showToast('Вы добавлены в лист ожидания');
+      const d = doctorById(doctorId);
+      const parent = btn.closest('div');
+      if(parent) parent.outerHTML = waitlistBlock(d);
+      bindGlobalActions(document.getElementById('app'));
+    });
+  });
+  scope.querySelectorAll('[data-action="leave-waitlist"]').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      leaveWaitlist(btn.getAttribute('data-id'));
+      showToast('Вы удалены из листа ожидания');
+      render();
+    });
+  });
+  scope.querySelectorAll('[data-action="cancel-booking"]').forEach(btn=>{
+    btn.addEventListener('click', function(){
+      const id = btn.getAttribute('data-id');
+      const b = state.bookings.find(x=>x.id===id);
+      if(b){ b.cancelled = true; saveState(); render(); showToast('Запись отменена'); }
+    });
+  });
+  scope.querySelectorAll('[data-action="open-review-modal"]').forEach(btn=>{
+    btn.addEventListener('click', function(){ openReviewModal(btn.getAttribute('data-doctor'), btn.getAttribute('data-verified')==='true'); });
+  });
+  scope.querySelectorAll('[data-action="open-login-modal"]').forEach(btn=>{
+    btn.addEventListener('click', function(e){ e.preventDefault(); openAuthModal('login'); });
+  });
+  scope.querySelectorAll('[data-action="require-auth"]').forEach(btn=>{
+    btn.addEventListener('click', function(e){
+      if(state.user) return;
+      e.preventDefault();
+      openAuthModal();
+    });
+  });
+  scope.querySelectorAll('[data-action="open-register-modal"]').forEach(btn=>{
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      openAuthModal('register');
+    });
+  });
+  scope.querySelectorAll('[data-action="logout"]').forEach(btn=>{
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      state.user = null; saveState(); render(); showToast('Вы вышли из аккаунта');
+    });
+  });
+  const themeBtn = scope.querySelector('[data-action="toggle-theme"]');
+  if(themeBtn){
+    themeBtn.addEventListener('click', function(){
+      const root = document.documentElement;
+      const cur = root.getAttribute('data-theme');
+      root.setAttribute('data-theme', cur==='dark' ? 'light' : 'dark');
+      try{ localStorage.setItem('mc_theme', root.getAttribute('data-theme')); }catch(e){}
+    });
+  }
+  const mobileNavBtn = scope.querySelector('[data-action="open-mobile-nav"]');
+  if(mobileNavBtn){
+    mobileNavBtn.addEventListener('click', function(){
+      const rawPath = (location.hash.slice(1) || '/').split('?')[0];
+      const firstPart = rawPath.split('/').filter(Boolean)[0];
+      openMobileNav('#/'+(firstPart||''));
+    });
+  }
+}
+
+/* ---------------- Modals ---------------- */
+function openAuthModal(defaultTab){
+  defaultTab = defaultTab || (state.accounts.length ? 'login' : 'register');
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.setAttribute('role','dialog');
+  overlay.setAttribute('aria-modal','true');
+  overlay.innerHTML = '<div class="modal-box" style="max-width:420px;">'
+    + '<div style="display:flex;gap:6px;border-bottom:1px solid var(--line);margin:-4px -4px 0;">'
+    +   '<button type="button" class="tab-btn auth-tab-btn" data-authtab="login" style="flex:1;">Вход</button>'
+    +   '<button type="button" class="tab-btn auth-tab-btn" data-authtab="register" style="flex:1;">Регистрация</button>'
+    + '</div>'
+    + '<div id="auth-error" role="alert" hidden style="background:var(--danger-tint);color:var(--danger);border-radius:var(--radius-s);padding:10px 12px;font-size:13px;margin-top:14px;"></div>'
+    + '<form id="login-form-2" style="margin-top:16px;">'
+      + '<div class="form-row"><label for="li2-phone">Телефон</label><input id="li2-phone" type="tel" name="phone" required placeholder="+7 7__ ___-__-__"></div>'
+      + '<div class="form-row"><label for="li2-pass">Пароль</label><input id="li2-pass" type="password" name="password" required placeholder="Ваш пароль"></div>'
+      + '<button class="btn btn-primary btn-block" type="submit">Войти</button>'
+      + (state.accounts.length ? '<p style="font-size:12px;color:var(--ink-faint);margin-top:10px;">Демо-доступ: '+state.accounts[0].phone+' / '+state.accounts[0].password+'</p>' : '<p style="font-size:12px;color:var(--ink-faint);margin-top:10px;">Аккаунтов ещё нет — перейдите на вкладку «Регистрация».</p>')
+    + '</form>'
+    + '<form id="register-form" hidden style="margin-top:16px;">'
+      + '<div class="form-row-2"><div class="form-row"><label for="rg-fn">Имя</label><input id="rg-fn" type="text" name="firstName" required></div><div class="form-row"><label for="rg-ln">Фамилия</label><input id="rg-ln" type="text" name="lastName" required></div></div>'
+      + '<div class="form-row"><label for="rg-phone">Телефон</label><input id="rg-phone" type="tel" name="phone" required placeholder="+7 7__ ___-__-__"></div>'
+      + '<div class="form-row"><label for="rg-email">Email</label><input id="rg-email" type="email" name="email" required placeholder="you@example.com"></div>'
+      + '<div class="form-row"><label for="rg-bd">Дата рождения</label><input id="rg-bd" type="date" name="birthdate" required></div>'
+      + '<div class="form-row"><label for="rg-pass">Пароль</label><input id="rg-pass" type="password" name="password" required minlength="4" placeholder="Минимум 4 символа"></div>'
+      + '<label style="display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--ink-soft);margin:14px 0;line-height:1.4;"><input type="checkbox" name="consent" required style="margin-top:2px;width:18px;height:18px;flex-shrink:0;">Согласен(-на) на обработку персональных данных в соответствии с политикой конфиденциальности Medify</label>'
+      + '<button class="btn btn-accent btn-block" type="submit">Создать аккаунт</button>'
+    + '</form>'
+    + '<button class="btn btn-ghost btn-block" type="button" id="close-auth" style="margin-top:8px;">Отмена</button>'
+  + '</div>';
+  document.body.appendChild(overlay);
+
+  const loginForm = overlay.querySelector('#login-form-2');
+  const registerForm = overlay.querySelector('#register-form');
+  const errBox = overlay.querySelector('#auth-error');
+  const tabBtns = overlay.querySelectorAll('.auth-tab-btn');
+  function setTab(tab){
+    tabBtns.forEach(b=>b.classList.toggle('active', b.getAttribute('data-authtab')===tab));
+    loginForm.hidden = tab !== 'login';
+    registerForm.hidden = tab !== 'register';
+    errBox.hidden = true;
+  }
+  tabBtns.forEach(b=> b.addEventListener('click', function(){ setTab(b.getAttribute('data-authtab')); }) );
+  setTab(defaultTab);
+
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.remove(); });
+  overlay.querySelector('#close-auth').addEventListener('click', ()=>overlay.remove());
+
+  function showErr(msg){ errBox.hidden=false; errBox.textContent = msg; }
+
+  loginForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const fd = new FormData(loginForm);
+    const phone = fd.get('phone').trim();
+    const acc = state.accounts.find(a=>a.phone===phone && a.password===fd.get('password'));
+    if(!acc){ showErr('Неверный телефон или пароль. Проверьте данные или зарегистрируйтесь.'); return; }
+    state.user = Object.assign({}, acc); delete state.user.password;
+    saveState(); overlay.remove(); render(); showToast('С возвращением, '+state.user.name.split(' ')[0]+'!');
+    location.hash = '#/cabinet';
+  });
+
+  registerForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    const fd = new FormData(registerForm);
+    const phone = fd.get('phone').trim();
+    if(state.accounts.some(a=>a.phone===phone)){ showErr('Аккаунт с таким номером уже зарегистрирован. Войдите во вкладке «Вход».'); setTab('login'); return; }
+    const acc = {
+      name: (fd.get('firstName')+' '+fd.get('lastName')).trim(),
+      phone: phone, email: fd.get('email'), birthdate: fd.get('birthdate'), password: fd.get('password'),
+    };
+    state.accounts.push(acc);
+    state.user = Object.assign({}, acc); delete state.user.password;
+    saveState(); overlay.remove(); render(); showToast('Аккаунт создан. Добро пожаловать в Medify!');
+    location.hash = '#/cabinet';
+  });
+}
+function openReviewModal(doctorId, verified){
+  const d = doctorById(doctorId);
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.setAttribute('role','dialog');
+  overlay.setAttribute('aria-modal','true');
+  overlay.innerHTML = '<div class="modal-box">'
+    + '<h3 style="font-size:18px;">Оценить приём</h3>'
+    + '<p style="font-size:13px;color:var(--ink-soft);margin-top:4px;">'+d.name+'</p>'
+    + (verified ? '<div class="tag" style="color:var(--ok);background:var(--ok-tint);display:inline-flex;align-items:center;gap:5px;margin-top:8px;">'+icon('shieldCheck',{size:12})+'Отзыв будет отмечен как подтверждённый</div>' : '')
+    + '<form id="review-form" style="margin-top:14px;">'
+      + ratingField('attitude','Отношение врача')
+      + ratingField('wait','Время ожидания')
+      + ratingField('explanation','Объяснение диагноза')
+      + ratingField('treatment','Качество лечения')
+      + ratingField('priceValue','Соответствие цены')
+      + ratingField('recommend','Готовы рекомендовать')
+      + '<div class="form-row"><label for="rv-text">Комментарий</label><textarea id="rv-text" name="text" style="min-height:70px;" placeholder="Поделитесь впечатлением о приёме"></textarea></div>'
+      + '<button class="btn btn-primary btn-block" type="submit">Отправить отзыв</button>'
+      + '<button class="btn btn-ghost btn-block" type="button" id="close-review">Отмена</button>'
+    + '</form>'
+  + '</div>';
+  document.body.appendChild(overlay);
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.remove(); });
+  overlay.querySelector('#close-review').addEventListener('click', ()=>overlay.remove());
+  overlay.querySelector('#review-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+    const now = new Date();
+    const attitude=Number(fd.get('attitude')||5), wait=Number(fd.get('wait')||5), explanation=Number(fd.get('explanation')||5),
+          treatment=Number(fd.get('treatment')||5), priceValue=Number(fd.get('priceValue')||5), recommend=Number(fd.get('recommend')||5);
+    const overall = Math.round(((attitude+wait+explanation+treatment+priceValue+recommend)/6)*2)/2;
+    state.myReviews.unshift({
+      doctorId: doctorId, text: fd.get('text')||'Без комментария',
+      date: now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear(),
+      overall: overall, attitude:attitude, wait:wait, explanation:explanation, treatment:treatment, priceValue:priceValue, recommend:recommend, expectation:overall,
+      verified: !!verified,
+    });
+    saveState(); overlay.remove(); showToast('Спасибо за отзыв!'); render();
+  });
+  function ratingField(name,label){
+    return '<div class="form-row"><label for="rv-'+name+'">'+label+'</label><select id="rv-'+name+'" name="'+name+'" style="width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:var(--radius-s);min-height:44px;"><option value="5">5 — отлично</option><option value="4">4 — хорошо</option><option value="3">3 — нормально</option><option value="2">2 — плохо</option><option value="1">1 — очень плохо</option></select></div>';
+  }
+}
+
+/* ---------------- Init ---------------- */
+try{
+  const savedTheme = localStorage.getItem('mc_theme');
+  if(savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+}catch(e){}
+
+window.addEventListener('hashchange', render);
+render();
+
+})();
+</script>
+
+</body></html>
